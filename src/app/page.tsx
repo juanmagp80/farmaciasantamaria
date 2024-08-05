@@ -1,29 +1,20 @@
-// app/page.tsx
-import Link from 'next/link';
-import styles from '../styles/Home.module.css';
+import React from 'react';
+import BeachVideo from './components/BeachVideo/BeachVideo';
+import ContactHeader from './components/ContactHeader/ContactHeader';
+import MainHeader from './components/MainHeader/MainHeader';
 
-export default function Home() {
+const Home: React.FC = () => {
   return (
-    <main className={styles.main}>
-      <h1 className={styles.title}>Bienvenidos a la Farmacia Local</h1>
-      <div className={styles.grid}>
-        <Link href="/noticias" className={styles.card}>
-          <h3>Noticias &rarr;</h3>
-          <p>Lee las últimas noticias de nuestra farmacia.</p>
-        </Link>
-        <Link href="/promociones" className={styles.card}>
-          <h3>Promociones &rarr;</h3>
-          <p>Descubre nuestras promociones especiales.</p>
-        </Link>
-        <Link href="/subir-noticia" className={styles.card}>
-          <h3>Subir Noticia &rarr;</h3>
-          <p>Los farmacéuticos pueden subir nuevas noticias aquí.</p>
-        </Link>
-        <Link href="/subir-promocion" className={styles.card}>
-          <h3>Subir Promoción &rarr;</h3>
-          <p>Los farmacéuticos pueden subir nuevas promociones aquí.</p>
-        </Link>
-      </div>
-    </main>
+    <div>
+      <ContactHeader />
+      <MainHeader />
+      <BeachVideo />
+      <main className="p-4">
+        <h2 className="text-xl mb-4">Bienvenidos a la Farmacia Local</h2>
+        <p>Encuentra las mejores promociones y noticias de salud aquí.</p>
+      </main>
+    </div>
   );
-}
+};
+
+export default Home;

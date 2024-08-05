@@ -1,4 +1,4 @@
-// app/subir-promocion/page.tsx
+"use client"// app/subir-promocion/page.tsx
 import { useState } from 'react';
 
 export default function SubirPromocion() {

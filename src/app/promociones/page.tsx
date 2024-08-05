@@ -1,4 +1,4 @@
-// app/promociones/page.tsx
+"use client"// app/promociones/page.tsx
 import { useEffect, useState } from 'react';
 
 async function fetchPromociones() {
@@ -7,7 +7,7 @@ async function fetchPromociones() {
 }
 
 export default function Promociones() {
-    const [promociones, setPromociones] = useState([]);
+    const [promociones, setPromociones] = useState<{ id: number, titulo: string, contenido: string }[]>([]);
 
     useEffect(() => {
         fetchPromociones().then(setPromociones);

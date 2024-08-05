@@ -1,5 +1,11 @@
-// app/noticias/page.tsx
+"use client";
 import { useEffect, useState } from 'react';
+
+interface Noticia {
+    id: number;
+    titulo: string;
+    contenido: string;
+}
 
 async function fetchNoticias() {
     const response = await fetch('/api/noticias');
@@ -7,7 +13,7 @@ async function fetchNoticias() {
 }
 
 export default function Noticias() {
-    const [noticias, setNoticias] = useState([]);
+    const [noticias, setNoticias] = useState<Noticia[]>([]);
 
     useEffect(() => {
         fetchNoticias().then(setNoticias);

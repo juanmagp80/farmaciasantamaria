@@ -1,4 +1,4 @@
-// app/subir-noticia/page.tsx
+"use client"// app/subir-noticia/page.tsx
 import { useState } from 'react';
 
 export default function SubirNoticia() {
