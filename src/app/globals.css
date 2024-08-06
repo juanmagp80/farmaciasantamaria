@@ -1,3 +1,4 @@
+/* styles/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -30,4 +31,23 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* styles/globals.css */
+.menu-item {
+  position: relative;
+  display: inline-block;
+  padding: 0.5rem;
+}
+
+.menu-item:hover .cross-icon {
+  display: block;
+}
+
+.cross-icon {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  color: green;
 }

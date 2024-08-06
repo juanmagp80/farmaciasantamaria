@@ -3,75 +3,74 @@ import React, { useEffect, useRef, useState } from 'react';
 import PharmacyCrossIcon from '../PharmacyCrossIcon/PharmacyCrossIcon';
 
 const MainHeader: React.FC = () => {
-    const [hoveredIndex, setHoveredIndex] = useState<number>(0);
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(0); // Start with 0 to default position
+    const [iconPosition, setIconPosition] = useState<{ left: number; top: number }>({ left: 0, top: 0 });
     const menuRef = useRef<HTMLUListElement | null>(null);
-    const [crossPosition, setCrossPosition] = useState<{ left: number, width: number }>({ left: 0, width: 0 });
 
     useEffect(() => {
-        const updateCrossPosition = () => {
+        const updateIconPosition = () => {
             if (menuRef.current) {
                 const children = Array.from(menuRef.current.children) as HTMLElement[];
-                const activeChild = children[hoveredIndex];
+                const activeChild = children[hoveredIndex ?? 0];
                 if (activeChild) {
                     const rect = activeChild.getBoundingClientRect();
-                    setCrossPosition({
-                        left: rect.left + window.scrollX,
-                        width: rect.width
+                    setIconPosition({
+                        left: rect.left + window.scrollX + rect.width / 2,
+                        top: rect.top + window.scrollY - 20 // Adjust this value to move the icon up
                     });
                 }
             }
         };
 
-        updateCrossPosition();
-        window.addEventListener('resize', updateCrossPosition);
+        updateIconPosition();
+        window.addEventListener('resize', updateIconPosition);
 
         return () => {
-            window.removeEventListener('resize', updateCrossPosition);
+            window.removeEventListener('resize', updateIconPosition);
         };
     }, [hoveredIndex]);
 
     return (
-        <header className="bg-white text-black p-2">
+        <header className="relative bg-white text-black p-2">
             <div className="container mx-auto flex justify-between items-center">
                 <img src="/santamaria.png" alt="Farmacia Local" className="w-52" />
                 <nav className="relative flex items-center">
                     <ul className="flex space-x-4 relative" ref={menuRef}>
                         <li
-                            className="menu-item"
+                            className="relative flex items-center group"
                             onMouseEnter={() => setHoveredIndex(0)}
-                            onMouseLeave={() => setHoveredIndex(0)}
+                            onMouseLeave={() => setHoveredIndex(null)}
                         >
-                            <a href="#home" className="text-gray-800 text-2xl">Home</a>
+                            <a href="#home" className="text-gray-800">Home</a>
                         </li>
                         <li
-                            className="menu-item"
+                            className="relative flex items-center group"
                             onMouseEnter={() => setHoveredIndex(1)}
-                            onMouseLeave={() => setHoveredIndex(1)}
+                            onMouseLeave={() => setHoveredIndex(null)}
                         >
-                            <a href="#services" className="text-gray-800 text-2xl">Services</a>
+                            <a href="#services" className="text-gray-800">Services</a>
                         </li>
                         <li
-                            className="menu-item"
+                            className="relative flex items-center group"
                             onMouseEnter={() => setHoveredIndex(2)}
-                            onMouseLeave={() => setHoveredIndex(2)}
+                            onMouseLeave={() => setHoveredIndex(null)}
                         >
-                            <a href="#contact" className="text-gray-800 text-2xl">Contact</a>
+                            <a href="#contact" className="text-gray-800">Contact</a>
                         </li>
-
-                        {/* Cruz de farmacia */}
-                        <div
-                            className="cross-icon absolute"
-                            style={{
-                                left: `${crossPosition.left}px`,
-                                width: `${crossPosition.width}px`,
-                                height: '100%',
-                                transform: `translateX(${crossPosition.left}px)` // Ajuste para el deslizamiento
-                            }}
-                        >
-                            <PharmacyCrossIcon className="w-8 h-8 text-green-500" />
-                        </div>
                     </ul>
                 </nav>
+                {/* Cruz de farmacia */}
+                <div
+                    className="absolute transition-all duration-500"
+                    style={{
+                        left: `${iconPosition.left}px`,
+                        top: `${iconPosition.top}px`,
+                        transform: 'translate(-50%, -50%)',
+                        zIndex: 10
+                    }}
+                >
+                    <PharmacyCrossIcon className="w-8 h-8 text-green-500" />
+                </div>
             </div>
         </header>
     );
