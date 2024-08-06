@@ -16,7 +16,7 @@ const MainHeader: React.FC = () => {
                     const rect = activeChild.getBoundingClientRect();
                     setIconPosition({
                         left: rect.left + window.scrollX + rect.width / 2,
-                        top: rect.top + window.scrollY - 20 // Adjust this value to move the icon up
+                        top: rect.top + window.scrollY - 30 // Adjust this value to move the icon up
                     });
                 }
             }
@@ -31,35 +31,41 @@ const MainHeader: React.FC = () => {
     }, [hoveredIndex]);
 
     return (
-        <header className="relative bg-white text-black p-2">
+        <header className="relative bg-blue-50 text-black rounded shadow-xl p-4">
             <div className="container mx-auto flex justify-between items-center">
-                <img src="/santamaria.png" alt="Farmacia Local" className="w-52" />
+                <img src="/santamaria.png" alt="Farmacia Local" className="w-40" />
                 <nav className="relative flex items-center">
                     <ul className="flex space-x-4 relative" ref={menuRef}>
                         <li
-                            className="relative flex items-center group"
+                            className="relative flex items-center group p-8 rounded hover:bg-gray-200 hover:shadow-lg"
                             onMouseEnter={() => setHoveredIndex(0)}
                             onMouseLeave={() => setHoveredIndex(null)}
                         >
-                            <a href="#home" className="text-gray-800">Home</a>
+                            <a href="#Inicio" className="text-gray-800 text-xl">Inicio</a>
                         </li>
                         <li
-                            className="relative flex items-center group"
+                            className="relative flex items-center group p-4 rounded hover:bg-gray-200 hover:shadow-lg"
                             onMouseEnter={() => setHoveredIndex(1)}
                             onMouseLeave={() => setHoveredIndex(null)}
                         >
-                            <a href="#services" className="text-gray-800">Services</a>
+                            <a href="#Servicios" className="text-gray-800 text-xl">Servicios</a>
                         </li>
                         <li
-                            className="relative flex items-center group"
+                            className="relative flex items-center group p-4 rounded hover:bg-gray-200 hover:shadow-lg"
                             onMouseEnter={() => setHoveredIndex(2)}
                             onMouseLeave={() => setHoveredIndex(null)}
                         >
-                            <a href="#contact" className="text-gray-800">Contact</a>
+                            <a href="#NuestroEquipo" className="text-gray-800 text-xl">Nuestro Equipo</a>
+                        </li>
+                        <li
+                            className="relative flex items-center group p-4 rounded hover:bg-gray-200 hover:shadow-lg"
+                            onMouseEnter={() => setHoveredIndex(3)}
+                            onMouseLeave={() => setHoveredIndex(null)}
+                        >
+                            <a href="#Contacto" className="text-gray-800 text-xl">Contacto</a>
                         </li>
                     </ul>
                 </nav>
-                {/* Cruz de farmacia */}
                 <div
                     className="absolute transition-all duration-500"
                     style={{
