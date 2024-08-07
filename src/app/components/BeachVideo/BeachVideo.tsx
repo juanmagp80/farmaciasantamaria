@@ -21,7 +21,7 @@ const BeachVideo = () => {
       <div className="absolute inset-0 flex items-center justify-center p-4">
         <div className="bg-white bg-opacity-20 p-6 rounded-lg shadow-lg backdrop-blur-md">
           <h1 className="text-5xl font-bold text-green-50 mb-4">FARMACIA SANTA MARIA</h1>
-          <p className="text-2xl text-center text-beige-300">Tu farmacia de confianza en La Cala del Moral.</p>
+          <p className="text-2xl text-center text-beige-300">Cuidamos de tu salud.</p>
         </div>
       </div>
 

@@ -3,6 +3,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .perspective-1000 {
+      perspective: 1000px;
+  }
+  .backface-hidden {
+      backface-visibility: hidden;
+  }
+  .rotate-y-180 {
+      transform: rotateY(180deg);
+  }
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
