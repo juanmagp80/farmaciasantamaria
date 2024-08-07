@@ -1,4 +1,6 @@
-"use client"
+// src/components/MainHeader.tsx
+
+'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import PharmacyCrossIcon from '../PharmacyCrossIcon/PharmacyCrossIcon';
 
@@ -63,6 +65,13 @@ const MainHeader: React.FC = () => {
                             onMouseLeave={() => setHoveredIndex(null)}
                         >
                             <a href="#Contacto" className="text-gray-800 text-xl">Contacto</a>
+                        </li>
+                        <li
+                            className="relative flex items-center group p-4 rounded hover:bg-gray-200 hover:shadow-lg"
+                            onMouseEnter={() => setHoveredIndex(4)}
+                            onMouseLeave={() => setHoveredIndex(null)}
+                        >
+                            <a href="/encargos" className="text-gray-800 text-xl">Encargos</a>
                         </li>
                     </ul>
                 </nav>

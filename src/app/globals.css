@@ -75,3 +75,51 @@ body {
   object-fit: cover; /* Ajusta la imagen para cubrir el área de la diapositiva sin distorsión */
   display: block;
 }
+/* En tu archivo CSS global o en el archivo CSS del componente */
+/* En tu archivo CSS global o en el archivo CSS del componente */
+/* Estilos para el modal */
+/* Estilos para el modal */
+/* Estilos del modal */
+/* Estilos del modal */
+/* Estilos del modal */
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  margin: auto;
+  position: relative;
+  z-index: 1000;
+  opacity: 0; /* Comienza invisible */
+  transform: translateY(-20px); /* Comienza desplazado hacia arriba */
+  transition: opacity 0.5s ease, transform 0.5s ease; /* Suaviza la aparición y desaparición */
+}
+
+/* Estilo cuando el modal está abierto */
+.modal-open {
+  opacity: 1; /* Totalmente visible */
+  transform: translateY(0); /* Posición normal */
+}
+
+.modal-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0; /* Comienza invisible */
+  transition: opacity 0.5s ease; /* Suaviza la aparición y desaparición */
+}
+
+/* Estilo cuando el overlay está abierto */
+.overlay-open {
+  opacity: 1; /* Totalmente visible */
+}
+
+
