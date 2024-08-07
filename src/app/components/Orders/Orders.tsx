@@ -30,8 +30,12 @@ const Orders: React.FC = () => {
 
         try {
             // Enviar el correo con EmailJS
-            const response = await emailjs.sendForm('service_s23cbc8', 'template_no3tf2s', form, '-8F5n8Qq44Gq9zPuz');
-
+            const response = await emailjs.sendForm(
+                process.env.REACT_APP_EMAILJS_SERVICE_ID!,
+                process.env.REACT_APP_EMAILJS_TEMPLATE_ID!,
+                form,
+                process.env.REACT_APP_EMAILJS_USER_ID!
+            );
             if (response.status === 200) {
                 setSubmitSuccess(true);
                 setUserName(data.nombre as string);
