@@ -1,6 +1,6 @@
 "use client";
 import emailjs from 'emailjs-com';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaEnvelope, FaMapMarkerAlt, FaPhoneAlt, FaWhatsapp } from 'react-icons/fa';
 import Modal from 'react-modal';
 
@@ -11,6 +11,13 @@ const Orders: React.FC = () => {
     const [submitSuccess, setSubmitSuccess] = useState<boolean | null>(null);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [userName, setUserName] = useState('');
+
+    useEffect(() => {
+        // Verifica que las variables de entorno estén definidas
+        console.log('USER_ID:', process.env.REACT_APP_EMAILJS_USER_ID);
+        console.log('SERVICE_ID:', process.env.REACT_APP_EMAILJS_SERVICE_ID);
+        console.log('TEMPLATE_ID:', process.env.REACT_APP_EMAILJS_TEMPLATE_ID);
+    }, []);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -29,13 +36,17 @@ const Orders: React.FC = () => {
         };
 
         try {
+            const userId = process.env.NEXT_PUBLIC_EMAILJS_USER_ID;
+            const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+            const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+
+            if (!userId || !serviceId || !templateId) {
+                throw new Error("Las variables de entorno de EmailJS no están definidas");
+            }
+
             // Enviar el correo con EmailJS
-            const response = await emailjs.sendForm(
-                process.env.REACT_APP_EMAILJS_SERVICE_ID!,
-                process.env.REACT_APP_EMAILJS_TEMPLATE_ID!,
-                form,
-                process.env.REACT_APP_EMAILJS_USER_ID!
-            );
+            const response = await emailjs.sendForm(serviceId, templateId, form, userId);
+
             if (response.status === 200) {
                 setSubmitSuccess(true);
                 setUserName(data.nombre as string);
