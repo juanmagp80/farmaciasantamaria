@@ -122,4 +122,12 @@ body {
   opacity: 1; /* Totalmente visible */
 }
 
+/* styles/globals.css o cualquier archivo CSS que estés usando */
+
+.slider-image {
+  width: 100%;
+  height: 400px; /* Ajusta según sea necesario */
+  object-fit: cover; /* Ajusta la imagen para que cubra el contenedor */
+  border-radius: 8px; /* Redondea las esquinas si es necesario */
+}
 

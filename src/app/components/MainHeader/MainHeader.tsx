@@ -43,7 +43,7 @@ const MainHeader: React.FC = () => {
                             onMouseEnter={() => setHoveredIndex(0)}
                             onMouseLeave={() => setHoveredIndex(null)}
                         >
-                            <a href="#Inicio" className="text-gray-800 text-xl">Inicio</a>
+                            <a href="/" className="text-gray-800 text-xl">Inicio</a>
                         </li>
                         <li
                             className="relative flex items-center group p-4 rounded hover:bg-gray-200 hover:shadow-lg"
