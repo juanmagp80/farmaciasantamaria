@@ -1,35 +1,20 @@
-// src/app/api/send-email/route.ts
+// src/app/api/reservas/route.ts
+import { NextResponse } from 'next/server';
 
-import nodemailer from 'nodemailer';
-
-export async function POST(request: Request) {
-    const { nombre, email, telefono, pedido } = await request.json();
-
-    const transporter = nodemailer.createTransport({
-        service: 'Gmail', // Puedes usar otros servicios como 'SendGrid', 'Mailgun', etc.
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS,
-        },
-    });
-
-    const mailOptions = {
-        from: 'tu-email@gmail.com',
-        to: 'juangpdev@gmail.com',
-        subject: 'Nuevo encargo',
-        text: `
-      Nombre: ${nombre}
-      Email: ${email}
-      Teléfono: ${telefono}
-      Pedido: ${pedido}
-    `,
-    };
-
+export async function POST(req: Request) {
     try {
-        await transporter.sendMail(mailOptions);
-        return new Response(JSON.stringify({ success: true }), { status: 200 });
+        const { date, timeSlot, email } = await req.json();
+
+        // Generar un identificador único para la reunión
+        const uniqueMeetingId = `${date}-${timeSlot}-${email}`;
+        const meetLink = `https://meet.jit.si/${uniqueMeetingId}`;
+
+        // Aquí podrías agregar la lógica para enviar el enlace de Meet al correo del usuario
+        // usando algún servicio de correo como Nodemailer o una API de terceros.
+
+        return NextResponse.json({ message: 'Cita reservada con éxito', meetLink });
     } catch (error) {
-        console.error('Error enviando el email:', error);
-        return new Response(JSON.stringify({ success: false }), { status: 500 });
+        console.error('Error al crear la cita:', error);
+        return NextResponse.json({ message: 'Error al crear la cita' }, { status: 500 });
     }
 }
