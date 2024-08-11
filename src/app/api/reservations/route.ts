@@ -1,10 +1,11 @@
 import emailjs from 'emailjs-com';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
+// Aquí podrías usar una base de datos. Para este ejemplo, usaremos un array en memoria.
 let reservas: any[] = [];
 
-export async function GET(req: Request) {
-    const { searchParams } = new URL(req.url);
+export async function GET(request: NextRequest) {
+    const { searchParams } = new URL(request.url);
     const date = searchParams.get('date');
 
     const reservasDelDia = reservas.filter((reserva) => reserva.date === date);
@@ -13,15 +14,14 @@ export async function GET(req: Request) {
     return NextResponse.json({ reservedTimes: horasReservadas });
 }
 
-export async function POST(req: Request) {
+export async function POST(request: NextRequest) {
     try {
-        const { name, email, date, time } = await req.json();
+        const body = await request.json();
+        const { name, email, date, time } = body;
 
-        // Verificar si la hora ya está reservada
-        const reservasDelDia = reservas.filter((reserva) => reserva.date === date);
-        const horasReservadas = reservasDelDia.map((reserva) => reserva.time);
-        if (horasReservadas.includes(time)) {
-            return NextResponse.json({ error: 'La hora ya está reservada.' }, { status: 400 });
+        // Validar que todos los campos estén presentes
+        if (!name || !email || !date || !time) {
+            return NextResponse.json({ error: 'Todos los campos son obligatorios.' }, { status: 400 });
         }
 
         // Generar el enlace de Jitsi Meet
@@ -49,9 +49,9 @@ export async function POST(req: Request) {
         );
 
         // Guardar la reserva en el array en memoria
-        reservas.push({ name, email, date, time });
+        reservas.push(body);
 
-        return NextResponse.json({ message: 'Reserva creada exitosamente. Revisa tu correo.' });
+        return NextResponse.json({ message: 'Reserva creada exitosamente. Revisa tu correo.', data: body });
     } catch (error) {
         console.error('Error al enviar el correo:', error);
         return NextResponse.json({ error: 'Hubo un problema al crear la reserva.' }, { status: 500 });
