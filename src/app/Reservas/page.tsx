@@ -1,8 +1,8 @@
 "use client"
-import emailjs from 'emailjs-com';
 import { useEffect, useState } from 'react';
 import Calendar, { CalendarProps } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { supabase } from '../../../lib/supabaseClient'; // Asegúrate de que la ruta es correcta
 
 export default function ReservasPage() {
     const [name, setName] = useState('');
@@ -14,36 +14,62 @@ export default function ReservasPage() {
 
     useEffect(() => {
         if (date) {
-            fetch(`/api/reservas?date=${date.toISOString().split('T')[0]}`)
-                .then(response => response.json())
-                .then(data => setReservedTimes(data.reservedTimes));
+            const fetchReservedTimes = async () => {
+                const { data, error } = await supabase
+                    .from('reservas')
+                    .select('time')
+                    .eq('date', date.toISOString().split('T')[0]);
+
+                if (error) {
+                    console.error('Error fetching reserved times:', error);
+                    return;
+                }
+
+                const times = data?.map((item) => item.time) || [];
+                setReservedTimes(times);
+            };
+
+            fetchReservedTimes();
         }
     }, [date]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const templateParams = {
-            to_name: name,
-            to_email: email,
-            date: date?.toISOString().split('T')[0],
-            time,
-            meeting_id: `${name}-${Date.now()}`,
-        };
+        // Formatear la fecha correctamente
+        const formattedDate = date ? date.toISOString().split('T')[0] : null;
+
+        console.log('Submitting reservation with data:', { name, email, date: formattedDate, time });
 
         try {
-            await emailjs.send(
-                process.env.NEXT_PUBLIC_RESERVAS_EMAILJS_SERVICE_ID!,
-                process.env.NEXT_PUBLIC_RESERVAS_EMAILJS_TEMPLATE_ID!,
-                templateParams,
-                process.env.NEXT_PUBLIC_RESERVAS_EMAILJS_USER_ID!
-            );
+            const response = await fetch('/api/reservas', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    date: formattedDate,
+                    time
+                }),
+            });
+
+            console.log('Response status:', response.status);
+            const data = await response.json();
+
+            console.log('Response data:', data);
+
+            if (!response.ok) {
+                setMessage(data.error || 'Hubo un problema al crear la reserva.');
+                return;
+            }
+
             setMessage('Reserva creada exitosamente. Revisa tu correo.');
         } catch (error) {
-            console.error('Error al enviar el correo:', error);
-            setMessage('Hubo un problema al crear la reserva. Verifica tu clave pública y otros parámetros.');
+            console.error('Error al crear la reserva:', error);
+            setMessage('Hubo un problema al crear la reserva.');
         }
     };
+
 
     const generateTimeSlots = () => {
         const slots = [];
@@ -71,7 +97,7 @@ export default function ReservasPage() {
 
     return (
         <div className="reservas-container">
-            <h1>Reservar una Cita</h1>
+            <h1 className='text-2xl text-center mb-4'>Reservar una Cita Telemática</h1>
             <form onSubmit={handleSubmit} className="reservas-form">
                 <div className="form-group">
                     <label>Nombre:</label>
@@ -95,14 +121,16 @@ export default function ReservasPage() {
                 </div>
                 <div className="form-group">
                     <label>Fecha:</label>
-                    <Calendar
-                        onChange={handleDateChange}
-                        value={date}
-                        minDate={new Date()}
-                        locale="es-ES"
-                        tileDisabled={({ date }) => date.getDay() === 0 || date.getDay() === 6}
-                        className="calendar"
-                    />
+                    <div className="calendar-container"> {/* Contenedor centrado */}
+                        <Calendar
+                            onChange={handleDateChange}
+                            value={date}
+                            minDate={new Date()}
+                            locale="es-ES"
+                            tileDisabled={({ date }) => date.getDay() === 0 || date.getDay() === 6}
+                            className="calendar"
+                        />
+                    </div>
                 </div>
                 <div className="form-group">
                     <label>Hora:</label>

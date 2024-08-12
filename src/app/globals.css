@@ -163,12 +163,80 @@ body {
   border-radius: 4px;
 }
 
+/* styles.css */
 .calendar {
-  width: 100%;
+  background-color: #ffffff; /* Fondo blanco */
   border: none;
-  border-radius: 4px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  font-family: 'Arial', sans-serif; /* Fuente personalizada */
 }
+
+.react-calendar__month-view__weekdays {
+  background-color: #007bff; /* Color de fondo de los días de la semana */
+  color: #ffffff; /* Color de texto de los días de la semana */
+  border-radius: 8px 8px 0 0; /* Bordes superiores redondeados */
+}
+
+.react-calendar__tile {
+  background-color: #f9f9f9; /* Color de fondo de los días */
+  color: #333; /* Color de texto de los días */
+  border-radius: 4px; /* Bordes redondeados para cada día */
+  transition: background-color 0.3s ease;
+}
+
+.react-calendar__tile:hover {
+  background-color: #007bff; /* Color de fondo al pasar el mouse */
+  color: #ffffff; /* Color de texto al pasar el mouse */
+}
+
+.react-calendar__tile--active {
+  background-color: #28a745; /* Color de fondo para el día seleccionado */
+  color: #ffffff; /* Color de texto para el día seleccionado */
+  border-radius: 4px; /* Bordes redondeados para el día seleccionado */
+}
+
+.react-calendar__tile--now {
+  background-color: #ffc107; /* Color de fondo para el día actual */
+  color: #000; /* Color de texto para el día actual */
+}
+.react-calendar__tile--disabled {
+  background-color: #e9ecef; /* Fondo gris claro */
+  color: #6c757d; /* Texto gris oscuro */
+  cursor: not-allowed; /* Cambia el cursor a 'no permitido' */
+  text-decoration: line-through; /* Texto tachado */
+}
+.react-calendar__tile {
+  font-size: 16px; /* Tamaño de fuente más grande */
+  font-weight: bold; /* Texto en negrita */
+  padding: 15px; /* Más espacio alrededor de los números */
+  text-align: center;
+}
+.react-calendar__navigation button {
+  background-color: #007bff; /* Color de fondo de los botones de navegación */
+  color: #381db1; /* Color de texto de los botones */
+  border-radius: 50%; /* Botones circulares */
+  padding: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.react-calendar__navigation button:hover {
+  background-color: #0056b3; /* Color de fondo al pasar el mouse sobre los botones */
+}
+.react-calendar__navigation__label {
+  font-size: 18px; /* Tamaño de fuente más grande */
+  font-weight: bold; /* Texto en negrita */
+  color: #333; /* Color de texto */
+}
+
+.react-calendar__navigation__arrow {
+  font-size: 18px; /* Tamaño de flecha más grande */
+  color: #007bff; /* Color de la flecha */
+}
+
+
 
 .time-slots {
   display: flex;
@@ -219,4 +287,14 @@ body {
 .time-slot-button.selected {
   background-color: #28a745;
   color: white;
+}
+/* styles.css */
+.calendar-container {
+  display: flex;
+  justify-content: center; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente */
+  width: 100%;
+  max-width: 600px; /* Puedes ajustar el ancho máximo según sea necesario */
+  margin: 0 auto; /* Centra el contenedor en la página */
+  padding: 20px; /* Opcional: añade padding para espacio alrededor */
 }
