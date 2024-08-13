@@ -1,43 +1,43 @@
 "use client"
+import emailjs from 'emailjs-com';
 import { useEffect, useState } from 'react';
 import Calendar, { CalendarProps } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { supabase } from '../../../lib/supabaseClient'; // Asegúrate de que la ruta es correcta
 
 export default function ReservasPage() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [date, setDate] = useState<Date | null>(null);
+    const [date, setDate] = useState<Date>(new Date()); // Inicializar con la fecha actual
     const [time, setTime] = useState('');
     const [message, setMessage] = useState('');
     const [reservedTimes, setReservedTimes] = useState<string[]>([]);
-
     useEffect(() => {
-        if (date) {
-            const fetchReservedTimes = async () => {
-                const { data, error } = await supabase
-                    .from('reservas')
-                    .select('time')
-                    .eq('date', date.toISOString().split('T')[0]);
+        const fetchReservedTimes = async () => {
+            const formattedDate = date.toISOString().split('T')[0];
+            console.log('Fetching reserved times for date:', formattedDate);
 
-                if (error) {
-                    console.error('Error fetching reserved times:', error);
-                    return;
-                }
+            // Hacer la solicitud GET a tu API para obtener las horas reservadas
+            const response = await fetch(`/api/reservas?date=${formattedDate}`);
 
-                const times = data?.map((item) => item.time) || [];
-                setReservedTimes(times);
-            };
+            if (!response.ok) {
+                console.error('Error fetching reserved times:', response.statusText);
+                return;
+            }
 
-            fetchReservedTimes();
-        }
-    }, [date]);
+            const data = await response.json();
+
+            const times = data?.reservas?.map((item: { time: string }) => item.time) || [];
+            setReservedTimes(times);
+        };
+
+        fetchReservedTimes();
+    }, [date]); // Se ejecutará cada vez que cambie la fecha
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         // Formatear la fecha correctamente
-        const formattedDate = date ? date.toISOString().split('T')[0] : null;
+        const formattedDate = date.toISOString().split('T')[0];
 
         console.log('Submitting reservation with data:', { name, email, date: formattedDate, time });
 
@@ -63,13 +63,36 @@ export default function ReservasPage() {
                 return;
             }
 
-            setMessage('Reserva creada exitosamente. Revisa tu correo.');
+            // Enviar el correo usando EmailJS
+            const templateParams = {
+                to_name: name,
+                to_email: email,
+                date: formattedDate,
+                time,
+                jitsi_link: `https://meet.jit.si/${name}-${Date.now()}`
+            };
+
+            try {
+                await emailjs.send(
+                    process.env.NEXT_PUBLIC_RESERVAS_EMAILJS_SERVICE_ID!,
+                    process.env.NEXT_PUBLIC_RESERVAS_EMAILJS_TEMPLATE_ID!,
+                    templateParams,
+                    process.env.NEXT_PUBLIC_RESERVAS_EMAILJS_USER_ID!
+                );
+
+                setMessage('Reserva creada exitosamente. Revisa tu correo.');
+
+                // Actualizar el estado de las horas reservadas
+                setReservedTimes((prevReservedTimes) => [...prevReservedTimes, time]);
+            } catch (emailError) {
+                console.error('Error sending email:', emailError);
+                setMessage('Reserva creada, pero hubo un problema al enviar el correo.');
+            }
         } catch (error) {
             console.error('Error al crear la reserva:', error);
             setMessage('Hubo un problema al crear la reserva.');
         }
     };
-
 
     const generateTimeSlots = () => {
         const slots = [];
@@ -88,11 +111,15 @@ export default function ReservasPage() {
     };
 
     const handleDateChange: CalendarProps['onChange'] = (value) => {
+        console.log('handleDateChange called with value:', value);
         if (Array.isArray(value)) {
-            setDate(value[0]);
-        } else {
-            setDate(value);
+            if (value.length > 0 && value[0] !== null) {
+                setDate(new Date(value[0] as Date));
+            }
+        } else if (value !== null) {
+            setDate(new Date(value as Date));
         }
+        setTime(''); // Limpiar la hora seleccionada al cambiar la fecha
     };
 
     return (

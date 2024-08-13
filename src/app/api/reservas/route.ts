@@ -1,5 +1,4 @@
 import { createClient } from '@supabase/supabase-js';
-import emailjs from 'emailjs-com';
 import { NextResponse } from 'next/server';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -12,7 +11,6 @@ export async function POST(req: Request) {
 
         // Logging para depuración
         console.log('Received data in API:', { name, email, date, time });
-        console.log('Type of date:', typeof date);
 
         // Verificar si los campos están presentes
         if (!date || !time || !name || !email) {
@@ -43,33 +41,6 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'La hora ya está reservada.' }, { status: 400 });
         }
 
-        const meetingId = `${name}-${Date.now()}`;
-        const jitsiLink = `https://meet.jit.si/${meetingId}`;
-
-        const templateParams = {
-            to_name: name,
-            to_email: email,
-            date,
-            time,
-            jitsi_link: jitsiLink,
-        };
-
-        // Logging para parámetros del correo
-        console.log('Sending email with params:', templateParams);
-
-        // Enviar el correo usando EmailJS
-        try {
-            await emailjs.send(
-                process.env.NEXT_PUBLIC_RESERVAS_EMAILJS_SERVICE_ID!,
-                process.env.NEXT_PUBLIC_RESERVAS_EMAILJS_TEMPLATE_ID!,
-                templateParams,
-                process.env.NEXT_PUBLIC_RESERVAS_EMAILJS_USER_ID!
-            );
-        } catch (emailError) {
-            console.error('Error sending email:', emailError);
-            return NextResponse.json({ error: 'Error al enviar el correo.' }, { status: 500 });
-        }
-
         // Guardar la reserva en Supabase
         const { error: insertError } = await supabase
             .from('reservas')
@@ -80,9 +51,37 @@ export async function POST(req: Request) {
             throw insertError;
         }
 
+        // Respuesta exitosa
         return NextResponse.json({ message: 'Reserva creada exitosamente. Revisa tu correo.' });
     } catch (error) {
         console.error('Error al crear la reserva:', error);
         return NextResponse.json({ error: 'Hubo un problema al crear la reserva.' }, { status: 500 });
+    }
+}
+
+// Nuevo endpoint para obtener las reservas de un día específico
+export async function GET(req: Request) {
+    const { searchParams } = new URL(req.url);
+    const date = searchParams.get('date');
+
+    if (!date) {
+        return NextResponse.json({ error: 'La fecha es obligatoria.' }, { status: 400 });
+    }
+
+    try {
+        const { data: reservasDelDia, error: fetchError } = await supabase
+            .from('reservas')
+            .select('time')
+            .eq('date', date);
+
+        if (fetchError) {
+            console.error('Error fetching reservations:', fetchError);
+            throw fetchError;
+        }
+
+        return NextResponse.json({ reservas: reservasDelDia });
+    } catch (error) {
+        console.error('Error al obtener las reservas:', error);
+        return NextResponse.json({ error: 'Hubo un problema al obtener las reservas.' }, { status: 500 });
     }
 }
