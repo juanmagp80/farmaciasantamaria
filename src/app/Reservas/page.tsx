@@ -1,22 +1,30 @@
-"use client"
+"use client";
 import emailjs from 'emailjs-com';
 import { useEffect, useState } from 'react';
 import Calendar, { CalendarProps } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
+interface Reserva {
+    name: string;
+    email: string;
+    date: string; // Formato 'YYYY-MM-DD'
+    time: string; // Formato 'HH:MM:SS'
+}
+
 export default function ReservasPage() {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
+    const [name, setName] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
     const [date, setDate] = useState<Date>(new Date()); // Inicializar con la fecha actual
-    const [time, setTime] = useState('');
-    const [message, setMessage] = useState('');
+    const [time, setTime] = useState<string>('');
+    const [message, setMessage] = useState<string>('');
     const [reservedTimes, setReservedTimes] = useState<string[]>([]);
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false); // Estado para controlar el envío
+
     useEffect(() => {
         const fetchReservedTimes = async () => {
             const formattedDate = date.toISOString().split('T')[0];
             console.log('Fetching reserved times for date:', formattedDate);
 
-            // Hacer la solicitud GET a tu API para obtener las horas reservadas
             const response = await fetch(`/api/reservas?date=${formattedDate}`);
 
             if (!response.ok) {
@@ -25,21 +33,23 @@ export default function ReservasPage() {
             }
 
             const data = await response.json();
-
-            const times = data?.reservas?.map((item: { time: string }) => item.time) || [];
+            const times = (data?.reservas || []).map((reserva: Reserva) => reserva.time.slice(0, 5)); // Extraer solo 'HH:MM'
             setReservedTimes(times);
         };
 
         fetchReservedTimes();
-    }, [date]); // Se ejecutará cada vez que cambie la fecha
+    }, [date]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Formatear la fecha correctamente
-        const formattedDate = date.toISOString().split('T')[0];
+        if (isSubmitting) return;
+        setIsSubmitting(true);
 
-        console.log('Submitting reservation with data:', { name, email, date: formattedDate, time });
+        const formattedDate = date.toISOString().split('T')[0];
+        const formattedTime = `${time}:00`; // Convertir a 'HH:MM:SS'
+
+        console.log('Submitting reservation with data:', { name, email, date: formattedDate, time: formattedTime });
 
         try {
             const response = await fetch('/api/reservas', {
@@ -49,26 +59,29 @@ export default function ReservasPage() {
                     name,
                     email,
                     date: formattedDate,
-                    time
+                    time: formattedTime
                 }),
             });
 
             console.log('Response status:', response.status);
             const data = await response.json();
-
             console.log('Response data:', data);
 
             if (!response.ok) {
                 setMessage(data.error || 'Hubo un problema al crear la reserva.');
+                setIsSubmitting(false);
                 return;
             }
+
+            setReservedTimes((prevReservedTimes) => [...prevReservedTimes, time]);
+            setMessage('Reserva creada exitosamente. Revisa tu correo.');
 
             // Enviar el correo usando EmailJS
             const templateParams = {
                 to_name: name,
                 to_email: email,
                 date: formattedDate,
-                time,
+                time: formattedTime,
                 jitsi_link: `https://meet.jit.si/${name}-${Date.now()}`
             };
 
@@ -81,9 +94,6 @@ export default function ReservasPage() {
                 );
 
                 setMessage('Reserva creada exitosamente. Revisa tu correo.');
-
-                // Actualizar el estado de las horas reservadas
-                setReservedTimes((prevReservedTimes) => [...prevReservedTimes, time]);
             } catch (emailError) {
                 console.error('Error sending email:', emailError);
                 setMessage('Reserva creada, pero hubo un problema al enviar el correo.');
@@ -91,11 +101,13 @@ export default function ReservasPage() {
         } catch (error) {
             console.error('Error al crear la reserva:', error);
             setMessage('Hubo un problema al crear la reserva.');
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
     const generateTimeSlots = () => {
-        const slots = [];
+        const slots: string[] = [];
         const start = new Date();
         start.setHours(10, 0, 0, 0);
         const end = new Date();
@@ -148,7 +160,7 @@ export default function ReservasPage() {
                 </div>
                 <div className="form-group">
                     <label>Fecha:</label>
-                    <div className="calendar-container"> {/* Contenedor centrado */}
+                    <div className="calendar-container">
                         <Calendar
                             onChange={handleDateChange}
                             value={date}
@@ -175,7 +187,9 @@ export default function ReservasPage() {
                         ))}
                     </div>
                 </div>
-                <button type="submit" className="submit-button">Reservar</button>
+                <button type="submit" className="submit-button" disabled={isSubmitting}>
+                    {isSubmitting ? 'Enviando...' : 'Reservar'}
+                </button>
             </form>
             {message && <p className="message">{message}</p>}
         </div>

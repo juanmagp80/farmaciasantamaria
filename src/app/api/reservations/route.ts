@@ -1,59 +1,42 @@
-import emailjs from 'emailjs-com';
-import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
+import { NextResponse } from 'next/server';
 
-// Aquí podrías usar una base de datos. Para este ejemplo, usaremos un array en memoria.
-let reservas: any[] = [];
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export async function GET(request: NextRequest) {
-    const { searchParams } = new URL(request.url);
+export async function GET(req: Request) {
+    const { searchParams } = new URL(req.url);
     const date = searchParams.get('date');
 
-    const reservasDelDia = reservas.filter((reserva) => reserva.date === date);
-    const horasReservadas = reservasDelDia.map((reserva) => reserva.time);
+    if (!date) {
+        return NextResponse.json({ error: 'La fecha es obligatoria.' }, { status: 400 });
+    }
 
-    return NextResponse.json({ reservedTimes: horasReservadas });
-}
-
-export async function POST(request: NextRequest) {
     try {
-        const body = await request.json();
-        const { name, email, date, time } = body;
+        console.log('Fetching reservations for date:', date);
 
-        // Validar que todos los campos estén presentes
-        if (!name || !email || !date || !time) {
-            return NextResponse.json({ error: 'Todos los campos son obligatorios.' }, { status: 400 });
+        // Buscar las reservas en la fecha proporcionada
+        const { data: reservasDelDia, error: fetchError } = await supabase
+            .from('reservas')
+            .select('time')
+            .eq('date', date);
+
+        if (fetchError) {
+            console.error('Error fetching reservations:', fetchError);
+            return NextResponse.json({ error: 'Error al obtener reservas.' }, { status: 500 });
         }
 
-        // Generar el enlace de Jitsi Meet
-        const meetingId = `${name}-${Date.now()}`;
-        const jitsiLink = `https://meet.jit.si/${meetingId}`;
+        // Asegúrate de que el formato es correcto
+        const reservas = reservasDelDia.map((reserva: { time: string }) => ({
+            time: reserva.time.split('T')[1].substring(0, 5) // Extraer 'HH:MM'
+        }));
 
-        const templateParams = {
-            to_name: name,
-            to_email: email,
-            date,
-            time,
-            meeting_id: meetingId,
-            jitsi_link: jitsiLink, // Incluir el enlace de Jitsi Meet
-        };
+        console.log('Reservations fetched:', reservas);
 
-        // Agregar registros de depuración
-        console.log('templateParams:', templateParams);
-
-        // Enviar el correo usando EmailJS
-        await emailjs.send(
-            process.env.NEXT_PUBLIC_RESERVAS_EMAILJS_SERVICE_ID!,
-            process.env.NEXT_PUBLIC_RESERVAS_EMAILJS_TEMPLATE_ID!,
-            templateParams,
-            process.env.NEXT_PUBLIC_RESERVAS_EMAILJS_USER_ID!
-        );
-
-        // Guardar la reserva en el array en memoria
-        reservas.push(body);
-
-        return NextResponse.json({ message: 'Reserva creada exitosamente. Revisa tu correo.', data: body });
+        return NextResponse.json({ reservas });
     } catch (error) {
-        console.error('Error al enviar el correo:', error);
-        return NextResponse.json({ error: 'Hubo un problema al crear la reserva.' }, { status: 500 });
+        console.error('Error al obtener las reservas:', error);
+        return NextResponse.json({ error: 'Hubo un problema al obtener las reservas.' }, { status: 500 });
     }
 }
