@@ -3,6 +3,7 @@ import emailjs from 'emailjs-com';
 import { useEffect, useState } from 'react';
 import Calendar, { CalendarProps } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import Swal from 'sweetalert2';
 
 interface Reserva {
     name: string;
@@ -16,7 +17,6 @@ export default function ReservasPage() {
     const [email, setEmail] = useState<string>('');
     const [date, setDate] = useState<Date>(new Date()); // Inicializar con la fecha actual
     const [time, setTime] = useState<string>('');
-    const [message, setMessage] = useState<string>('');
     const [reservedTimes, setReservedTimes] = useState<string[]>([]);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false); // Estado para controlar el envío
 
@@ -68,13 +68,17 @@ export default function ReservasPage() {
             console.log('Response data:', data);
 
             if (!response.ok) {
-                setMessage(data.error || 'Hubo un problema al crear la reserva.');
+                Swal.fire({
+                    title: 'Error',
+                    text: data.error || 'Hubo un problema al crear la reserva.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
                 setIsSubmitting(false);
                 return;
             }
 
             setReservedTimes((prevReservedTimes) => [...prevReservedTimes, time]);
-            setMessage('Reserva creada exitosamente. Revisa tu correo.');
 
             // Enviar el correo usando EmailJS
             const templateParams = {
@@ -93,14 +97,31 @@ export default function ReservasPage() {
                     process.env.NEXT_PUBLIC_RESERVAS_EMAILJS_USER_ID!
                 );
 
-                setMessage('Reserva creada exitosamente. Revisa tu correo.');
+                Swal.fire({
+                    title: 'Éxito',
+                    text: 'Reserva creada exitosamente. Revisa tu correo.',
+                    imageUrl: '/santamaria.png', // Cambia esta URL por la de tu imagen
+                    imageAlt: 'Success Image',
+
+                    confirmButtonText: 'OK'
+                });
             } catch (emailError) {
                 console.error('Error sending email:', emailError);
-                setMessage('Reserva creada, pero hubo un problema al enviar el correo.');
+                Swal.fire({
+                    title: 'Éxito',
+                    text: 'Reserva creada, pero hubo un problema al enviar el correo.',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
             }
         } catch (error) {
             console.error('Error al crear la reserva:', error);
-            setMessage('Hubo un problema al crear la reserva.');
+            Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema al crear la reserva.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
         } finally {
             setIsSubmitting(false);
         }
@@ -158,16 +179,15 @@ export default function ReservasPage() {
                         className="form-input"
                     />
                 </div>
-                <div className="form-group">
-                    <label>Fecha:</label>
+                <div className="reservas-container">
+                    <h1 className='text-2xl text-center mb-4'>Reservar una Cita Telemática</h1>
                     <div className="calendar-container">
                         <Calendar
                             onChange={handleDateChange}
                             value={date}
                             minDate={new Date()}
                             locale="es-ES"
-                            tileDisabled={({ date }) => date.getDay() === 0 || date.getDay() === 6}
-                            className="calendar"
+                            className="react-calendar" // Asegúrate de usar esta clase para aplicar los estilos personalizados
                         />
                     </div>
                 </div>
@@ -191,7 +211,6 @@ export default function ReservasPage() {
                     {isSubmitting ? 'Enviando...' : 'Reservar'}
                 </button>
             </form>
-            {message && <p className="message">{message}</p>}
         </div>
     );
 }

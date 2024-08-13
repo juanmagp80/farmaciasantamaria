@@ -285,7 +285,7 @@ body {
   color: #155724;
 }
 .time-slot-button.selected {
-  background-color: #28a745;
+  background-color: #3b38f3;
   color: white;
 }
 /* styles.css */
@@ -297,4 +297,79 @@ body {
   max-width: 600px; /* Puedes ajustar el ancho máximo según sea necesario */
   margin: 0 auto; /* Centra el contenedor en la página */
   padding: 20px; /* Opcional: añade padding para espacio alrededor */
+}
+/* Agrega esto en tu archivo CSS global o en el archivo CSS del componente */
+
+.calendar-container {
+  perspective: 1000px; /* Perspectiva para el efecto 3D */
+}
+
+.react-calendar {
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19); /* Sombra 3D */
+  transition: transform 0.3s ease; /* Transición suave para el efecto */
+}
+
+.react-calendar:hover {
+  transform: rotateX(5deg) rotateY(5deg); /* Efecto 3D al pasar el ratón */
+}
+
+/* Opcional: puedes agregar más estilos para los días y el encabezado del calendario */
+.react-calendar__tile {
+  border-radius: 4px; /* Bordes redondeados para las casillas de días */
+}
+
+.react-calendar__month-view__weekdays {
+  background: #f0f0f0; /* Fondo del encabezado de los días de la semana */
+}
+/* Agrega estos estilos a tu archivo CSS */
+
+/* Estilo para los botones de las horas */
+.time-slot-button {
+  border: none;
+  border-radius: 5px; /* Bordes redondeados */
+  background: #1fac02; /* Fondo blanco */
+  color: #eef5ec; /* Color del texto */
+  padding: 10px 15px; /* Espaciado interno */
+  font-size: 16px; /* Tamaño del texto */
+  cursor: pointer;
+  transition: all 0.3s ease; /* Transición suave */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19); /* Sombra 3D */
+}
+
+.time-slot-button:hover {
+  background: #2e1ae7; /* Fondo al pasar el ratón */
+  transform: translateY(-3px); /* Eleva el botón */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 12px 24px rgba(0, 0, 0, 0.19); /* Aumenta la sombra */
+}
+
+.time-slot-button:active {
+  background: #0bc443; /* Fondo cuando se hace clic */
+  transform: translateY(1px); /* Reduce la elevación al hacer clic */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.19); /* Disminuye la sombra */
+}
+
+/* Estilo para el botón de reservar */
+.submit-button {
+  border: none;
+  border-radius: 5px; /* Bordes redondeados */
+  background: #1d2bf3; /* Fondo azul */
+  color: #fdfdfc; /* Color del texto */
+  padding: 12px 20px; /* Espaciado interno */
+  font-size: 18px; /* Tamaño del texto */
+  cursor: pointer;
+  transition: all 0.3s ease; /* Transición suave */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19); /* Sombra 3D */
+}
+
+.submit-button:hover {
+  background: #060561; /* Fondo más oscuro al pasar el ratón */
+  transform: translateY(-3px); /* Eleva el botón */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 12px 24px rgba(0, 0, 0, 0.19); /* Aumenta la sombra */
+}
+
+.submit-button:active {
+  background: #004080; /* Fondo aún más oscuro cuando se hace clic */
+  transform: translateY(1px); /* Reduce la elevación al hacer clic */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.19); /* Disminuye la sombra */
 }

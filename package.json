@@ -37,6 +37,7 @@
     "sib-api-v3-sdk": "^8.5.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.12",
+    "sweetalert2": "^11.12.4",
     "swiper": "^9.4.1"
   },
   "devDependencies": {

@@ -7,27 +7,42 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
-    const date = searchParams.get('date');
+    let date = searchParams.get('date');
 
     if (!date) {
         return NextResponse.json({ error: 'La fecha es obligatoria.' }, { status: 400 });
     }
 
-    try {
-        console.log('Fetching reservations for date:', date);
+    // Forzar el formato de la fecha
+    const formattedDate = new Date(date).toISOString().split('T')[0];
+    console.log('Formatted Date:', formattedDate);
 
+    try {
         const { data: reservasDelDia, error: fetchError } = await supabase
             .from('reservas')
-            .select('time')
-            .eq('date', date);
+            .select('*')
+            .eq('date', formattedDate);
 
         if (fetchError) {
             console.error('Error fetching reservations:', fetchError);
-            return NextResponse.json({ error: 'Error al obtener reservas.' }, { status: 500 });
+            return NextResponse.json({ error: 'Error al obtener las reservas.' }, { status: 500 });
         }
 
+        console.log('Raw data fetched:', reservasDelDia);
+
+        if (!reservasDelDia || reservasDelDia.length === 0) {
+            console.log('No reservations found for the specified date.');
+            return NextResponse.json({ reservas: [] });
+        }
+
+        // Procesar los datos de reservas
         const reservas = reservasDelDia.map((reserva) => ({
-            time: reserva.time.substring(0, 5) // Extraer 'HH:MM'
+            id: reserva.id,
+            name: reserva.name,
+            email: reserva.email,
+            date: reserva.date,
+            time: reserva.time, // Hora ya en formato correcto 'HH:MM'
+            created_at: reserva.created_at
         }));
 
         console.log('Reservations fetched:', reservas);
