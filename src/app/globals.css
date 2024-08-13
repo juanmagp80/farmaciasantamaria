@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* global.css */
+
+/* Importar fuente Montserrat */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 @layer utilities {
   .perspective-1000 {
       perspective: 1000px;
@@ -30,6 +34,7 @@
 }
 
 body {
+  font-family: 'Poppins', sans-serif;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -373,3 +378,4 @@ body {
   transform: translateY(1px); /* Reduce la elevación al hacer clic */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.19); /* Disminuye la sombra */
 }
+

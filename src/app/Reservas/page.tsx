@@ -157,7 +157,7 @@ export default function ReservasPage() {
 
     return (
         <div className="reservas-container">
-            <h1 className='text-2xl text-center mb-4'>Reservar una Cita Telemática</h1>
+            <h1 className='text-2xl text-3d text-center mb-4'>Reservar una Cita Telemática</h1>
             <form onSubmit={handleSubmit} className="reservas-form">
                 <div className="form-group">
                     <label>Nombre:</label>
@@ -180,7 +180,7 @@ export default function ReservasPage() {
                     />
                 </div>
                 <div className="reservas-container">
-                    <h1 className='text-2xl text-center mb-4'>Reservar una Cita Telemática</h1>
+
                     <div className="calendar-container">
                         <Calendar
                             onChange={handleDateChange}

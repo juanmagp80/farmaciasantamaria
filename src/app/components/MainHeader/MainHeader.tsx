@@ -33,9 +33,9 @@ const MainHeader: React.FC = () => {
     }, [hoveredIndex]);
 
     return (
-        <header className="relative bg-blue-50 text-black rounded shadow-xl p-4">
+        <header className="relative text-white rounded shadow-xl p-4 bg-[url('/penon.webp')] bg-cover  bg-no-repea">
             <div className="container mx-auto flex justify-between items-center">
-                <img src="/santamaria.png" alt="Farmacia Local" className="w-40" />
+                <img src="/santamaria.png" alt="Farmacia Local" className="w-36" />
                 <nav className="relative flex items-center">
                     <ul className="flex space-x-4 relative" ref={menuRef}>
                         <li
