@@ -1,5 +1,6 @@
 // src/app/layout.tsx
 "use client";
+import { NextUIProvider } from '@nextui-org/react';
 import { SessionProvider } from "next-auth/react";
 import { Inter } from 'next/font/google';
 import React from 'react';
@@ -19,9 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body >
-        <ContactHeader />
-        <MainHeader />
-        <SessionProvider>{children}</SessionProvider>      </body>
+        <NextUIProvider>
+          <ContactHeader />
+          <MainHeader />
+          <SessionProvider>{children}</SessionProvider>
+        </NextUIProvider>
+      </body>
     </html>
   );
 }

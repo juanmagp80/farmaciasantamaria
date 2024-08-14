@@ -56,6 +56,12 @@ body {
   display: inline-block;
   padding: 0.5rem;
 }
+/* Asegúrate de que el icono esté correctamente posicionado */
+.cross-icon {
+  position: absolute;
+  transition: transform 0.5s ease-in-out; /* Transición suave para el movimiento */
+  z-index: 20; /* Asegura que el icono esté sobre otros elementos */
+}
 
 .menu-item:hover .cross-icon {
   display: block;
