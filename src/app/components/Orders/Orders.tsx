@@ -3,6 +3,7 @@ import emailjs from 'emailjs-com';
 import React, { useEffect, useState } from 'react';
 import { FaEnvelope, FaMapMarkerAlt, FaPhoneAlt, FaWhatsapp } from 'react-icons/fa';
 import Modal from 'react-modal';
+import CustomMainHeader from '../MainHeader/CustomMainHeader';
 
 // Configura el modal para que use el elemento raíz correcto
 
@@ -78,7 +79,9 @@ const Orders: React.FC = () => {
     };
 
     return (
-        <div className="relative w-full h-screen bg-cover bg-center" style={{ backgroundImage: 'url(/interior.png)' }}>
+
+        <div className="relative w-full pt-24 h-screen bg-cover bg-center" style={{ backgroundImage: 'url(/interior.png)' }}>
+            <CustomMainHeader />
             <div className="absolute inset-0 bg-black opacity-10"></div> {/* Fondo oscuro para el contraste del texto */}
             <div className="relative z-10 p-8 max-w-5xl mx-auto">
                 <div className="bg-white bg-opacity-80 rounded-lg shadow-lg p-8 mt-20"> {/* Fondo blanco con opacidad */}

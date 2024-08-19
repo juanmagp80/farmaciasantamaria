@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Calendar, { CalendarProps } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import Swal from 'sweetalert2';
-
+import CustomMainHeaderReservation from '../components/MainHeader/CustomMainHeaderReservation';
 interface Reserva {
     name: string;
     email: string;
@@ -156,61 +156,66 @@ export default function ReservasPage() {
     };
 
     return (
-        <div className="reservas-container">
-            <h1 className='text-2xl text-3d text-center mb-4'>Reservar una Cita Telemática</h1>
-            <form onSubmit={handleSubmit} className="reservas-form">
-                <div className="form-group">
-                    <label>Nombre:</label>
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                        className="form-input"
-                    />
-                </div>
-                <div className="form-group">
-                    <label>Email:</label>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                        className="form-input"
-                    />
-                </div>
+        <>
+            <CustomMainHeaderReservation />
+            <div className="reservas-page-wrapper">
                 <div className="reservas-container">
+                    <h1 className='text-2xl text-3d text-center mb-4'>Reservar una Cita Telemática</h1>
+                    <form onSubmit={handleSubmit} className="reservas-form">
+                        <div className="form-group">
+                            <label>Nombre:</label>
+                            <input
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                                className="form-input"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Email:</label>
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                                className="form-input"
+                            />
+                        </div>
+                        <div className="reservas-container">
 
-                    <div className="calendar-container">
-                        <Calendar
-                            onChange={handleDateChange}
-                            value={date}
-                            minDate={new Date()}
-                            locale="es-ES"
-                            className="react-calendar" // Asegúrate de usar esta clase para aplicar los estilos personalizados
-                        />
-                    </div>
+                            <div className="calendar-container">
+                                <Calendar
+                                    onChange={handleDateChange}
+                                    value={date}
+                                    minDate={new Date()}
+                                    locale="es-ES"
+                                    className="react-calendar" // Asegúrate de usar esta clase para aplicar los estilos personalizados
+                                />
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label>Hora:</label>
+                            <div className="time-slots">
+                                {generateTimeSlots().map((slot) => (
+                                    <button
+                                        key={slot}
+                                        type="button"
+                                        onClick={() => setTime(slot)}
+                                        disabled={reservedTimes.includes(slot)}
+                                        className={`time-slot-button ${reservedTimes.includes(slot) ? 'disabled' : ''} ${time === slot ? 'selected' : ''}`}
+                                    >
+                                        {slot}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                        <button type="submit" className="submit-button" disabled={isSubmitting}>
+                            {isSubmitting ? 'Enviando...' : 'Reservar'}
+                        </button>
+                    </form>
                 </div>
-                <div className="form-group">
-                    <label>Hora:</label>
-                    <div className="time-slots">
-                        {generateTimeSlots().map((slot) => (
-                            <button
-                                key={slot}
-                                type="button"
-                                onClick={() => setTime(slot)}
-                                disabled={reservedTimes.includes(slot)}
-                                className={`time-slot-button ${reservedTimes.includes(slot) ? 'disabled' : ''} ${time === slot ? 'selected' : ''}`}
-                            >
-                                {slot}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-                <button type="submit" className="submit-button" disabled={isSubmitting}>
-                    {isSubmitting ? 'Enviando...' : 'Reservar'}
-                </button>
-            </form>
-        </div>
+            </div>
+        </>
     );
 }

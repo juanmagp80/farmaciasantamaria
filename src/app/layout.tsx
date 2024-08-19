@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react";
 import { Inter } from 'next/font/google';
 import React from 'react';
 import ContactHeader from './components/ContactHeader/ContactHeader';
+import Footer from './components/Footer/Footer';
 import MainHeader from './components/MainHeader/MainHeader';
 import './globals.css';
 
@@ -24,6 +25,7 @@ export default function RootLayout({
           <ContactHeader />
           <MainHeader />
           <SessionProvider>{children}</SessionProvider>
+          <Footer />
         </NextUIProvider>
       </body>
     </html>

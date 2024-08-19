@@ -145,11 +145,24 @@ body {
 /* styles.css */
 .reservas-container {
   max-width: 600px;
-  margin: 0 auto;
+  margin-top: 140px; /* Ajusta este valor para bajar el contenedor */
+  margin-left: auto;
+  margin-right: auto;
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.form-group {
+  margin-bottom: 10px; /* Mantén el espacio entre los campos del formulario */
+}
+
+.reservas-page-wrapper {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  min-height: 100vh; /* Altura mínima de la pantalla */
+  background-color: #e0e0e0; /* Color de fondo opcional */
 }
 
 .reservas-form {
@@ -302,18 +315,18 @@ body {
 /* styles.css */
 .calendar-container {
   display: flex;
-  justify-content: center; /* Centra el contenido horizontalmente */
-  align-items: center; /* Centra el contenido verticalmente */
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  max-width: 600px; /* Puedes ajustar el ancho máximo según sea necesario */
-  margin: 0 auto; /* Centra el contenedor en la página */
-  padding: 20px; /* Opcional: añade padding para espacio alrededor */
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 10px;
+  perspective: 1000px; /* Perspectiva para el efecto 3D */
+
 }
 /* Agrega esto en tu archivo CSS global o en el archivo CSS del componente */
 
-.calendar-container {
-  perspective: 1000px; /* Perspectiva para el efecto 3D */
-}
+
 
 .react-calendar {
   border-radius: 10px; /* Bordes redondeados */

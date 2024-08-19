@@ -3,7 +3,7 @@ import { Navbar, NavbarBrand } from '@nextui-org/react';
 import React, { useEffect, useRef, useState } from 'react';
 import PharmacyCrossIcon from '../PharmacyCrossIcon/PharmacyCrossIcon';
 
-const MainHeader: React.FC = () => {
+const CustomMainHeaderReservation: React.FC = () => {
     const [show, setShow] = useState(true);
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const [iconPosition, setIconPosition] = useState<{ left: number; top: number }>({ left: 0, top: 0 });
@@ -53,9 +53,9 @@ const MainHeader: React.FC = () => {
         <header
             ref={headerRef}
             className={`fixed top-8 left-0 w-full transition-transform duration-500 z-50 ${show ? 'translate-y-0' : '-translate-y-[calc(100%+8px)]'
-                } transform bg-black bg-opacity-10 text-white`}
+                } transform bg-black bg-opacity-10`}
         >
-            <Navbar isBordered className="bg-transparent shadow-xl text-white text-xl">
+            <Navbar isBordered className="bg-transparent shadow-xl text-xl">
                 <div className="container mx-auto flex justify-between items-center">
                     <NavbarBrand>
                         <img src="/santamaria2.png" alt="Farmacia Local" className="w-36" />
@@ -66,42 +66,42 @@ const MainHeader: React.FC = () => {
                             onMouseEnter={() => setHoveredIndex(0)}
                             onMouseLeave={() => setHoveredIndex(null)}
                         >
-                            <a href="/" className="text-white text-xl">Inicio</a>
+                            <a href="/" className="text-black text-xl">Inicio</a>
                         </li>
                         <li
                             className="relative flex items-center group p-4 rounded hover:bg-gray-400 hover:shadow-lg"
                             onMouseEnter={() => setHoveredIndex(1)}
                             onMouseLeave={() => setHoveredIndex(null)}
                         >
-                            <a href="#Servicios" className="text-white text-xl">Servicios</a>
+                            <a href="#Servicios" className="text-black text-xl">Servicios</a>
                         </li>
                         <li
                             className="relative flex items-center group p-4 rounded hover:bg-gray-400 hover:shadow-lg"
                             onMouseEnter={() => setHoveredIndex(2)}
                             onMouseLeave={() => setHoveredIndex(null)}
                         >
-                            <a href="#NuestroEquipo" className="text-white text-xl">Nuestro Equipo</a>
+                            <a href="#NuestroEquipo" className="text-black text-xl">Nuestro Equipo</a>
                         </li>
                         <li
                             className="relative flex items-center group p-4 rounded hover:bg-gray-400 hover:shadow-lg"
                             onMouseEnter={() => setHoveredIndex(3)}
                             onMouseLeave={() => setHoveredIndex(null)}
                         >
-                            <a href="#Contacto" className="text-white text-xl">Contacto</a>
+                            <a href="#Contacto" className="text-black text-xl">Contacto</a>
                         </li>
                         <li
                             className="relative flex items-center group p-4 rounded hover:bg-gray-400 hover:shadow-lg"
                             onMouseEnter={() => setHoveredIndex(4)}
                             onMouseLeave={() => setHoveredIndex(null)}
                         >
-                            <a href="/encargos" className="text-white text-xl">Encargos</a>
+                            <a href="/encargos" className="text-black text-xl">Encargos</a>
                         </li>
                         <li
                             className="relative flex items-center group p-4 rounded hover:bg-gray-400 hover:shadow-lg"
                             onMouseEnter={() => setHoveredIndex(5)}
                             onMouseLeave={() => setHoveredIndex(null)}
                         >
-                            <a href="/Reservas" className="text-white text-xl">Consulta Virtual</a>
+                            <a href="/Reservas" className="text-black text-xl">Consulta Virtual</a>
                         </li>
                     </ul>
 
@@ -122,4 +122,4 @@ const MainHeader: React.FC = () => {
     );
 };
 
-export default MainHeader;
+export default CustomMainHeaderReservation;
