@@ -1,16 +1,27 @@
 "use client";
 import emailjs from 'emailjs-com';
 import { useEffect, useState } from 'react';
-import Calendar, { CalendarProps } from 'react-calendar';
+import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import Swal from 'sweetalert2';
 import CustomMainHeaderReservation from '../components/MainHeader/CustomMainHeaderReservation';
+export interface CalendarProps {
+    onChange?: (value: Date | Date[]) => void;
+    value?: Date | Date[];
+    minDate?: Date;
+    locale?: string;
+    className?: string;
+    // Otros props que necesites...
+}
+
+
 interface Reserva {
     name: string;
     email: string;
     date: string; // Formato 'YYYY-MM-DD'
     time: string; // Formato 'HH:MM:SS'
 }
+
 
 export default function ReservasPage() {
     const [name, setName] = useState<string>('');

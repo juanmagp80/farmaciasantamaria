@@ -1,7 +1,6 @@
 "use client"
 import { motion, useAnimation } from 'framer-motion';
 import React, { useEffect, useRef, useState } from 'react';
-import 'tailwindcss/tailwind.css';
 
 interface Miembro {
     nombre: string;
