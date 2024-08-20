@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import Swal from 'sweetalert2';
-import CustomMainHeaderReservation from '../components/MainHeader/CustomMainHeaderReservation';
+
 export interface CalendarProps {
     onChange?: (value: Date | Date[]) => void;
     value?: Date | Date[];
@@ -14,14 +14,12 @@ export interface CalendarProps {
     // Otros props que necesites...
 }
 
-
 interface Reserva {
     name: string;
     email: string;
     date: string; // Formato 'YYYY-MM-DD'
     time: string; // Formato 'HH:MM:SS'
 }
-
 
 export default function ReservasPage() {
     const [name, setName] = useState<string>('');
@@ -113,7 +111,6 @@ export default function ReservasPage() {
                     text: 'Reserva creada exitosamente. Revisa tu correo.',
                     imageUrl: '/santamaria.png', // Cambia esta URL por la de tu imagen
                     imageAlt: 'Success Image',
-
                     confirmButtonText: 'OK'
                 });
             } catch (emailError) {
@@ -167,66 +164,61 @@ export default function ReservasPage() {
     };
 
     return (
-        <>
-            <CustomMainHeaderReservation />
-            <div className="reservas-page-wrapper">
-                <div className="reservas-container">
-                    <h1 className='text-2xl text-3d text-center mb-4'>Reservar una Cita Telemática</h1>
-                    <form onSubmit={handleSubmit} className="reservas-form">
-                        <div className="form-group">
-                            <label>Nombre:</label>
-                            <input
-                                type="text"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                required
-                                className="form-input"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Email:</label>
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                                className="form-input"
-                            />
-                        </div>
-                        <div className="reservas-container">
-
-                            <div className="calendar-container">
-                                <Calendar
-                                    onChange={handleDateChange}
-                                    value={date}
-                                    minDate={new Date()}
-                                    locale="es-ES"
-                                    className="react-calendar" // Asegúrate de usar esta clase para aplicar los estilos personalizados
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <label>Hora:</label>
-                            <div className="time-slots">
-                                {generateTimeSlots().map((slot) => (
-                                    <button
-                                        key={slot}
-                                        type="button"
-                                        onClick={() => setTime(slot)}
-                                        disabled={reservedTimes.includes(slot)}
-                                        className={`time-slot-button ${reservedTimes.includes(slot) ? 'disabled' : ''} ${time === slot ? 'selected' : ''}`}
-                                    >
-                                        {slot}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                        <button type="submit" className="submit-button" disabled={isSubmitting}>
-                            {isSubmitting ? 'Enviando...' : 'Reservar'}
-                        </button>
-                    </form>
+        <div className="flex flex-col items-center p-4 sm:p-8 bg-gray-100 min-h-screen">
+            <h1 className='text-2xl sm:text-3xl font-bold text-center mb-6'>Reservar una Cita Telemática</h1>
+            <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
+                <div className="mb-4">
+                    <label className="block text-gray-700">Nombre:</label>
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                        className="mt-1 block w-full p-2 border rounded-md border-gray-300"
+                    />
                 </div>
-            </div>
-        </>
+                <div className="mb-4">
+                    <label className="block text-gray-700">Email:</label>
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className="mt-1 block w-full p-2 border rounded-md border-gray-300"
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-gray-700">Fecha:</label>
+                    <div className="w-full">
+                        <Calendar
+                            onChange={handleDateChange}
+                            value={date}
+                            minDate={new Date()}
+                            locale="es-ES"
+                            className="react-calendar w-full"
+                        />
+                    </div>
+                </div>
+                <div className="mb-4">
+                    <label className="block text-gray-700">Hora:</label>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                        {generateTimeSlots().map((slot) => (
+                            <button
+                                key={slot}
+                                type="button"
+                                onClick={() => setTime(slot)}
+                                disabled={reservedTimes.includes(slot)}
+                                className={`py-2 px-4 rounded-md border ${reservedTimes.includes(slot) ? 'bg-gray-400 text-white cursor-not-allowed' : 'bg-blue-500 text-white'} ${time === slot ? 'bg-blue-700' : ''}`}
+                            >
+                                {slot}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+                <button type="submit" className="w-full bg-blue-500 text-white py-2 px-4 rounded-md" disabled={isSubmitting}>
+                    {isSubmitting ? 'Enviando...' : 'Reservar'}
+                </button>
+            </form>
+        </div>
     );
 }
