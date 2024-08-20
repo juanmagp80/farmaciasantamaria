@@ -2,6 +2,7 @@
 import { motion, useAnimation } from 'framer-motion';
 import React, { useEffect, useRef, useState } from 'react';
 
+
 interface Miembro {
     nombre: string;
     imagen: string;
