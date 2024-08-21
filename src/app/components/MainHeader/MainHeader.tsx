@@ -1,10 +1,13 @@
-'use client';
 import { Navbar, NavbarBrand } from '@nextui-org/react';
-import React, { useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import PharmacyCrossIcon from '../PharmacyCrossIcon/PharmacyCrossIcon';
 
-const MainHeader: React.FC = () => {
+interface MainHeaderProps {
+    className?: string; // Asegúrate de incluir esta propiedad
+}
+
+const MainHeader: FC<MainHeaderProps> = ({ className }) => {
     const [show, setShow] = useState(true);
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const [iconPosition, setIconPosition] = useState<{ left: number; top: number }>({ left: 0, top: 0 });
@@ -58,7 +61,7 @@ const MainHeader: React.FC = () => {
     return (
         <header
             ref={headerRef}
-            className={`fixed top-18 sm:fixed sm:top-8 lg:fixed lg:top-8 left-0 w-full transition-transform duration-500 z-50 ${show ? 'translate-y-0' : '-translate-y-[calc(100%+8px)]'
+            className={`main-header ${className ? className : ''} fixed top-18 sm:fixed sm:top-8 lg:fixed lg:top-8 left-0 w-full transition-transform duration-500 z-50 ${show ? 'translate-y-0' : '-translate-y-[calc(100%+8px)]'
                 } transform bg-black bg-opacity-10 text-white`}
         >
             <Navbar isBordered className="bg-transparent shadow-xl text-white text-xl">

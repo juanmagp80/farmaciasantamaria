@@ -1,5 +1,5 @@
 // src/app/layout.tsx
-"use client";
+"use client"
 import { SessionProvider } from 'next-auth/react';
 import { Inter } from 'next/font/google';
 import { ReactNode } from 'react';
@@ -8,23 +8,23 @@ import ContactHeader from './components/ContactHeader/ContactHeader';
 import Footer from './components/Footer/Footer';
 import MainHeader from './components/MainHeader/MainHeader';
 
-
 const inter = Inter({ subsets: ['latin'] });
 
-
-export default function RootLayout({
-  children,
-}: {
+interface LayoutProps {
   children: ReactNode;
-}) {
+}
+
+export default function RootLayout({ children }: LayoutProps) {
   return (
-    <html lang="en">
-      <body >
-        <ContactHeader />
-        <MainHeader />
-        <SessionProvider>{children}</SessionProvider>
-        <Footer />
-      </body>
-    </html>
+    <SessionProvider>
+      <html lang="en">
+        <body>
+          <ContactHeader />
+          <MainHeader className="main-header-solid" />
+          {children}
+          <Footer />
+        </body>
+      </html>
+    </SessionProvider>
   );
 }
