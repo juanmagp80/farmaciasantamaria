@@ -7,7 +7,9 @@ import Modal from 'react-modal';
 import '../../src/app/globals.css';
 import ContactHeader from './components/ContactHeader/ContactHeader';
 import Footer from './components/Footer/Footer';
+import GoogleReviewsWidget from './components/GoogleReviewsWidget/GoogleReviewsWidget';
 import MainHeader from './components/MainHeader/MainHeader';
+
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -28,7 +30,9 @@ export default function RootLayout({ children }: LayoutProps) {
           <ContactHeader />
           <MainHeader className="main-header-transparent" />
           {children}
+          <GoogleReviewsWidget />
           <Footer />
+
         </body>
       </html>
     </SessionProvider>
