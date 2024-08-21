@@ -4,8 +4,8 @@ import { FaFacebook, FaInstagram, FaMapMarkerAlt, FaPhone, FaWhatsapp } from 're
 const ContactHeader: React.FC = () => {
   return (
     <div className="bg-gray-600 p-2 text-sm">
-      <div className="container mx-auto text-white flex justify-between items-center">
-        <div className="flex items-center space-x-4">
+      <div className="container mx-auto text-white flex flex-col sm:flex-row justify-between items-center">
+        <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
           <div className="flex items-center">
             {/* WhatsApp Link */}
             <a
@@ -41,7 +41,7 @@ const ContactHeader: React.FC = () => {
             </a>
           </div>
         </div>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 mt-2 sm:mt-0">
           <a
             href="https://www.facebook.com/search/top?q=farmacia%20santa%20maria%20de%20la%20cala"
             target="_blank"

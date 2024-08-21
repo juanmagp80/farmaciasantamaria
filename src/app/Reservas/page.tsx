@@ -11,7 +11,6 @@ export interface CalendarProps {
     minDate?: Date;
     locale?: string;
     className?: string;
-    // Otros props que necesites...
 }
 
 interface Reserva {
@@ -24,16 +23,14 @@ interface Reserva {
 export default function ReservasPage() {
     const [name, setName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
-    const [date, setDate] = useState<Date>(new Date()); // Inicializar con la fecha actual
+    const [date, setDate] = useState<Date>(new Date());
     const [time, setTime] = useState<string>('');
     const [reservedTimes, setReservedTimes] = useState<string[]>([]);
-    const [isSubmitting, setIsSubmitting] = useState<boolean>(false); // Estado para controlar el envío
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchReservedTimes = async () => {
             const formattedDate = date.toISOString().split('T')[0];
-            console.log('Fetching reserved times for date:', formattedDate);
-
             const response = await fetch(`/api/reservas?date=${formattedDate}`);
 
             if (!response.ok) {
@@ -42,7 +39,7 @@ export default function ReservasPage() {
             }
 
             const data = await response.json();
-            const times = (data?.reservas || []).map((reserva: Reserva) => reserva.time.slice(0, 5)); // Extraer solo 'HH:MM'
+            const times = (data?.reservas || []).map((reserva: Reserva) => reserva.time.slice(0, 5));
             setReservedTimes(times);
         };
 
@@ -56,9 +53,7 @@ export default function ReservasPage() {
         setIsSubmitting(true);
 
         const formattedDate = date.toISOString().split('T')[0];
-        const formattedTime = `${time}:00`; // Convertir a 'HH:MM:SS'
-
-        console.log('Submitting reservation with data:', { name, email, date: formattedDate, time: formattedTime });
+        const formattedTime = `${time}:00`;
 
         try {
             const response = await fetch('/api/reservas', {
@@ -72,9 +67,7 @@ export default function ReservasPage() {
                 }),
             });
 
-            console.log('Response status:', response.status);
             const data = await response.json();
-            console.log('Response data:', data);
 
             if (!response.ok) {
                 Swal.fire({
@@ -89,7 +82,6 @@ export default function ReservasPage() {
 
             setReservedTimes((prevReservedTimes) => [...prevReservedTimes, time]);
 
-            // Enviar el correo usando EmailJS
             const templateParams = {
                 to_name: name,
                 to_email: email,
@@ -109,7 +101,7 @@ export default function ReservasPage() {
                 Swal.fire({
                     title: 'Éxito',
                     text: 'Reserva creada exitosamente. Revisa tu correo.',
-                    imageUrl: '/santamaria.png', // Cambia esta URL por la de tu imagen
+                    imageUrl: '/santamaria.png',
                     imageAlt: 'Success Image',
                     confirmButtonText: 'OK'
                 });
@@ -152,7 +144,6 @@ export default function ReservasPage() {
     };
 
     const handleDateChange: CalendarProps['onChange'] = (value) => {
-        console.log('handleDateChange called with value:', value);
         if (Array.isArray(value)) {
             if (value.length > 0 && value[0] !== null) {
                 setDate(new Date(value[0] as Date));
@@ -160,12 +151,12 @@ export default function ReservasPage() {
         } else if (value !== null) {
             setDate(new Date(value as Date));
         }
-        setTime(''); // Limpiar la hora seleccionada al cambiar la fecha
+        setTime('');
     };
 
     return (
         <div className="flex flex-col items-center p-4 sm:p-8 bg-gray-100 min-h-screen">
-            <h1 className='text-2xl sm:text-3xl font-bold text-center mb-6'>Reservar una Cita Telemática</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6">Reservar una Cita Telemática</h1>
             <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
                 <div className="mb-4">
                     <label className="block text-gray-700">Nombre:</label>
@@ -189,13 +180,13 @@ export default function ReservasPage() {
                 </div>
                 <div className="mb-4">
                     <label className="block text-gray-700">Fecha:</label>
-                    <div className="w-full">
+                    <div className="w-full flex justify-center">
                         <Calendar
                             onChange={handleDateChange}
                             value={date}
                             minDate={new Date()}
                             locale="es-ES"
-                            className="react-calendar w-full"
+                            className="react-calendar w-full max-w-md" // Agregado max-w-md para limitar el tamaño
                         />
                     </div>
                 </div>
@@ -208,7 +199,14 @@ export default function ReservasPage() {
                                 type="button"
                                 onClick={() => setTime(slot)}
                                 disabled={reservedTimes.includes(slot)}
-                                className={`py-2 px-4 rounded-md border ${reservedTimes.includes(slot) ? 'bg-gray-400 text-white cursor-not-allowed' : 'bg-blue-500 text-white'} ${time === slot ? 'bg-blue-700' : ''}`}
+                                className={`py-2 px-4 rounded-md border 
+                                    ${reservedTimes.includes(slot)
+                                        ? 'bg-gray-400 text-white cursor-not-allowed'
+                                        : 'bg-blue-500 text-white hover:bg-blue-600'} 
+                                    ${time === slot
+                                        ? 'bg-green-500'
+                                        : 'bg-blue-500 text-white'}`
+                                }
                             >
                                 {slot}
                             </button>

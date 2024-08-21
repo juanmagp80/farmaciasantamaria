@@ -3,8 +3,8 @@ import { FaFacebook, FaInstagram, FaMapMarkerAlt, FaPhone, FaWhatsapp } from 're
 
 const ContactHeader: React.FC = () => {
     return (
-        <div className="bg-green-500 p-4 text-base md:text-lg">
-            <div className="container mx-auto text-black flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
+        <div className="bg-green-600 p-4 text-base md:text-lg">
+            <div className="container mx-auto text-white flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
                 <div className="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-4 w-full lg:w-auto">
                     <span className="w-full text-center md:text-left">
                         Apertura: Lunes a Viernes 8:30 a 21:00 - Sábados: 9:00 a 14:00 - Domingos: Cerrado
