@@ -26,7 +26,7 @@ export default function RootLayout({ children }: LayoutProps) {
       <html lang="en">
         <body>
           <ContactHeader />
-          <MainHeader className="main-header-solid" />
+          <MainHeader className="main-header-transparent" />
           {children}
           <Footer />
         </body>
