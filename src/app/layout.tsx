@@ -2,7 +2,8 @@
 "use client"
 import { SessionProvider } from 'next-auth/react';
 import { Inter } from 'next/font/google';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
+import Modal from 'react-modal';
 import '../../src/app/globals.css';
 import ContactHeader from './components/ContactHeader/ContactHeader';
 import Footer from './components/Footer/Footer';
@@ -15,6 +16,11 @@ interface LayoutProps {
 }
 
 export default function RootLayout({ children }: LayoutProps) {
+
+  useEffect(() => {
+    Modal.setAppElement('body');
+  }, []);
+
   return (
     <SessionProvider>
       <html lang="en">

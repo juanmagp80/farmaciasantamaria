@@ -12,10 +12,15 @@ const OrdersPage: React.FC = () => {
     const [userName, setUserName] = useState('');
 
     useEffect(() => {
+
         console.log('USER_ID:', process.env.NEXT_PUBLIC_EMAILJS_USER_ID);
         console.log('SERVICE_ID:', process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID);
         console.log('TEMPLATE_ID:', process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID);
     }, []);
+
+    useEffect(() => {
+        console.log('Modal is open:', modalIsOpen);
+    }, [modalIsOpen]);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -31,6 +36,7 @@ const OrdersPage: React.FC = () => {
             telefono: formData.get('telefono'),
             pedido: formData.get('pedido'),
         };
+        console.log('Form data:', data);
 
         try {
             const userId = process.env.NEXT_PUBLIC_EMAILJS_USER_ID;
@@ -47,6 +53,7 @@ const OrdersPage: React.FC = () => {
                 setSubmitSuccess(true);
                 setUserName(data.nombre as string);
                 setModalIsOpen(true);
+                console.log('Modal should open now');
                 form.reset();
             } else {
                 setSubmitSuccess(false);
@@ -151,18 +158,18 @@ const OrdersPage: React.FC = () => {
                     </div>
                 </div>
             </div>
-            {/* Modal */}
+
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
                 contentLabel="Confirmación de Envío"
-                className="modal max-w-sm sm:max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg"
-                overlayClassName="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+                className={`modal ${modalIsOpen ? 'modal-open' : ''}`} // Aplica la clase modal-open si el modal está abierto
+                overlayClassName={`modal-overlay ${modalIsOpen ? 'overlay-open' : ''}`} // Aplica la clase overlay-open si el overlay está abierto
             >
-                <h2 className="text-xl sm:text-2xl font-bold mb-4">¡Gracias por tu encargo!</h2>
+                <h2 className="text-2xl font-bold mb-4">¡Gracias por tu encargo!</h2>
                 <p className="mb-4">Hola {userName},</p>
                 <p className="mb-4">¡Gracias por tu encargo! Nos pondremos en contacto contigo pronto.</p>
-                <img src="/Designer.png" alt="Gracias" className="mb-4 w-full max-w-xs mx-auto" />
+                <img src="/Designer.png" alt="Gracias" className="mb-4" /> {/* Asegúrate de proporcionar la ruta correcta a la imagen */}
                 <button onClick={closeModal} className="bg-blue-500 text-white p-2 rounded">Cerrar</button>
             </Modal>
         </div>
