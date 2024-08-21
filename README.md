@@ -1,25 +1,29 @@
-🏥 Farmacia Online - Farmacia Santa María
-¡Bienvenido al sitio web oficial de Farmacia Santa María! Nuestra plataforma no solo ofrece información detallada sobre nuestros servicios y equipo, sino que también permite a nuestros clientes hacer encargos de productos online y reservar citas para consultas de manera rápida y segura.
+# 🏥 Farmacia Online - **Farmacia Santa María**
 
-🌟 Características
-🛍️ Información sobre la Farmacia: Conoce nuestra misión, visión, y los servicios que ofrecemos.
-👩‍⚕️ Equipo de Profesionales: Presentamos a nuestro equipo de farmacéuticos y personal especializado.
-📝 Encargos Online: Realiza pedidos de productos farmacéuticos a través de un formulario en línea. Recibirás confirmación de tu encargo vía email.
-📅 Reservas de Citas: Agenda citas para consultas online con nuestro equipo. Al confirmar la cita, tanto tú como nuestro personal recibirán un enlace automático para una videollamada.
-💻 Consultas Online: Asiste a tus consultas desde la comodidad de tu hogar mediante un sistema de videollamadas integrado.
-💻 Tecnologías
-Frontend: React
-Backend: Next.js (API Routes)
-Videollamadas: Integración con servicios de videoconferencia Jitsi.
-Formulario de Encargos: Gestión de pedidos mediante formularios conectados a una base de datos.
-Gestión de Citas: Sistema de reserva y notificación automática por correo electrónico.
-🚀 Instalación
-Clonar el repositorio:
+¡Bienvenido al sitio web oficial de **Farmacia Santa María**! Nuestra plataforma no solo ofrece información detallada sobre nuestros servicios y equipo, sino que también permite a nuestros clientes hacer encargos de productos online y reservar citas para consultas de manera rápida y segura.
 
-bash
-Copiar código
-git clone https://github.com/juanmagp80/farmaciasantamaria.git
-cd farmaciasantamaria
+## 🌟 **Características**
+
+- **🛍️ Información sobre la Farmacia**: Conoce nuestra misión, visión, y los servicios que ofrecemos.
+- **👩‍⚕️ Equipo de Profesionales**: Presentamos a nuestro equipo de farmacéuticos y personal especializado.
+- **📝 Encargos Online**: Realiza pedidos de productos farmacéuticos a través de un formulario en línea. Recibirás confirmación de tu encargo vía email.
+- **📅 Reservas de Citas**: Agenda citas para consultas online con nuestro equipo. Al confirmar la cita, tanto tú como nuestro personal recibirán un enlace automático para una videollamada.
+- **💻 Consultas Online**: Asiste a tus consultas desde la comodidad de tu hogar mediante un sistema de videollamadas integrado.
+
+## 💻 **Tecnologías**
+
+- **Frontend**: React
+- **Backend**: Next.js (API Routes)
+- **Videollamadas**: Integración con servicios de videoconferencia [Jitsi](https://jitsi.org/).
+- **Formulario de Encargos**: Gestión de pedidos mediante formularios conectados a una base de datos.
+- **Gestión de Citas**: Sistema de reserva y notificación automática por correo electrónico.
+
+## 🚀 **Instalación**
+
+1. **Clonar el repositorio**:
+   ```bash
+   git clone https://github.com/juanmagp80/farmaciasantamaria.git
+   cd farmaciasantamaria
 Instalar las dependencias:
 
 bash
