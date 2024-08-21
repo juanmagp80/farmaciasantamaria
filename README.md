@@ -47,27 +47,37 @@ Copiar código
 npm run dev
 La aplicación estará disponible en http://localhost:3000.
 
-📖 Uso
-🌐 Navegación
-Página Principal: Información general sobre la farmacia, incluyendo horarios de atención y servicios destacados.
-Equipo: Conoce a los miembros del equipo con sus respectivas especialidades.
-Encargos Online: Llena el formulario para solicitar productos y recibir confirmación del pedido por correo.
-Reservar Citas: Selecciona una fecha y hora para tu consulta. Recibirás un enlace de videollamada automáticamente.
-📅 Reservar una Consulta
-Selecciona el servicio de consulta en la página de reservas.
-Elige una fecha y hora disponible.
-Ingresa tus datos de contacto.
-Confirma tu cita. Recibirás un enlace de videollamada por correo electrónico.
-🤝 Contribuir
+## 📖 **Uso**
+
+### 🌐 **Navegación**
+
+- **Página Principal**: Información general sobre la farmacia, incluyendo horarios de atención y servicios destacados.
+- **Equipo**: Conoce a los miembros del equipo con sus respectivas especialidades.
+- **Encargos Online**: Llena el formulario para solicitar productos y recibir confirmación del pedido por correo.
+- **Reservar Citas**: Selecciona una fecha y hora para tu consulta. Recibirás un enlace de videollamada automáticamente.
+
+### 📅 **Reservar una Consulta**
+
+1. Selecciona el servicio de consulta en la página de reservas.
+2. Elige una fecha y hora disponible.
+3. Ingresa tus datos de contacto.
+4. Confirma tu cita. Recibirás un enlace de videollamada por correo electrónico.
+
+## 🤝 **Contribuir**
+
 ¡Las contribuciones son bienvenidas! Si deseas mejorar este proyecto, sigue estos pasos:
 
-Haz un fork del repositorio.
-Crea una nueva rama (git checkout -b feature/nueva-funcionalidad).
-Realiza tus cambios y haz commit (git commit -m 'Añadir nueva funcionalidad').
-Envía tus cambios al repositorio remoto (git push origin feature/nueva-funcionalidad).
-Abre un Pull Request.
-📜 Licencia
-Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo LICENSE para obtener más detalles.
+1. Haz un **fork** del repositorio.
+2. Crea una nueva rama (`git checkout -b feature/nueva-funcionalidad`).
+3. Realiza tus cambios y haz commit (`git commit -m 'Añadir nueva funcionalidad'`).
+4. Envía tus cambios al repositorio remoto (`git push origin feature/nueva-funcionalidad`).
+5. Abre un **Pull Request**.
 
-📬 Contacto
-Para más información, por favor envíame un correo a juangpdev@gmail.com.
+## 📜 **Licencia**
+
+Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo [LICENSE](./LICENSE) para obtener más detalles.
+
+## 📬 **Contacto**
+
+Para más información, por favor envíame un correo a [juangpdev@gmail.com](mailto:juangpdev@gmail.com).
+
