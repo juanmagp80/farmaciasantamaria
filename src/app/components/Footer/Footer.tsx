@@ -12,7 +12,7 @@ const ContactHeader: React.FC = () => {
                     <div className="flex items-center justify-center md:justify-start w-full lg:w-auto">
                         {/* WhatsApp Link */}
                         <a
-                            href="https://wa.me/644205732"
+                            href="https://wa.me/630950016"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center "
@@ -28,7 +28,7 @@ const ContactHeader: React.FC = () => {
                             className="flex items-center"
                         >
                             <FaPhone className="mr-1" />
-                            <span>952485849</span>
+                            <span>951921399</span>
                         </a>
                     </div>
                     <div className="flex items-center justify-center md:justify-start w-full lg:w-auto">
