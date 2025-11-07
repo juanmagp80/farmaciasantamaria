@@ -1,21 +1,20 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
-import { 
-    FaHome, 
-    FaCog, 
-    FaUsers, 
-    FaPhone, 
-    FaShoppingCart, 
-    FaVideo, 
-    FaWhatsapp,
+import {
     FaClock,
-    FaMapMarkerAlt,
-    FaStar,
+    FaCog,
     FaHeartbeat,
-    FaPrescriptionBottleAlt
+    FaHome,
+    FaMapMarkerAlt,
+    FaPhone,
+    FaPrescriptionBottleAlt,
+    FaShoppingCart,
+    FaStar,
+    FaUsers,
+    FaWhatsapp
 } from 'react-icons/fa';
 
 interface MainHeaderProps {
@@ -44,17 +43,17 @@ const isExternalUrl = (url: string): boolean => {
 
 const getActiveSection = (): number => {
     if (typeof window === 'undefined') return 0;
-    
+
     const sections = ['Servicios', 'NuestroEquipo', 'Contacto'];
     const scrollPosition = window.scrollY + 150;
-    
+
     for (let i = sections.length - 1; i >= 0; i--) {
         const element = document.getElementById(sections[i]);
         if (element && element.offsetTop <= scrollPosition) {
             return i + 1;
         }
     }
-    
+
     return 0;
 };
 
@@ -84,52 +83,52 @@ interface MenuItem {
 }
 
 const menuItems: MenuItem[] = [
-    { 
-        href: "/", 
-        label: "Inicio", 
+    {
+        href: "/",
+        label: "Inicio",
         shortLabel: "Home",
-        icon: <FaHome />, 
+        icon: <FaHome />,
         description: "Página principal",
         color: "text-blue-600",
         gradient: "from-blue-500 to-blue-600"
     },
-    { 
-        href: "#Servicios", 
-        label: "Servicios", 
-        icon: <FaHeartbeat />, 
+    {
+        href: "#Servicios",
+        label: "Servicios",
+        icon: <FaHeartbeat />,
         description: "Nuestros servicios farmacéuticos",
         color: "text-green-600",
         gradient: "from-green-500 to-green-600"
     },
-    { 
-        href: "#NuestroEquipo", 
-        label: "Nuestro Equipo", 
+    {
+        href: "#NuestroEquipo",
+        label: "Nuestro Equipo",
         shortLabel: "Equipo",
-        icon: <FaUsers />, 
+        icon: <FaUsers />,
         description: "Conoce a nuestro equipo profesional",
         color: "text-indigo-600",
         gradient: "from-indigo-500 to-indigo-600"
     },
-    { 
-        href: "/encargos", 
-        label: "Encargos", 
-        icon: <FaShoppingCart />, 
+    {
+        href: "/encargos",
+        label: "Encargos",
+        icon: <FaShoppingCart />,
         description: "Realiza tus encargos online",
         color: "text-purple-600",
         gradient: "from-purple-500 to-purple-600"
     },
-    { 
-        href: "/Reservas", 
-        label: "Reservas", 
-        icon: <FaCog />, 
+    {
+        href: "/Reservas",
+        label: "Reservas",
+        icon: <FaCog />,
         description: "Reserva tu cita",
         color: "text-orange-600",
         gradient: "from-orange-500 to-orange-600"
     },
-    { 
-        href: "#Contacto", 
-        label: "Contacto", 
-        icon: <FaPhone />, 
+    {
+        href: "#Contacto",
+        label: "Contacto",
+        icon: <FaPhone />,
         description: "Ponte en contacto con nosotros",
         color: "text-red-600",
         gradient: "from-red-500 to-red-600"
@@ -147,20 +146,20 @@ const MainHeader = ({ className = "" }: MainHeaderProps) => {
     useEffect(() => {
         const handleScroll = throttle(() => {
             const currentScrollY = window.scrollY;
-            
+
             // Determinar si debe estar visible
             if (currentScrollY > lastScrollY && currentScrollY > 100) {
                 setIsVisible(false);
             } else {
                 setIsVisible(true);
             }
-            
+
             // Determinar si está scrolled
             setIsScrolled(currentScrollY > 50);
-            
+
             // Actualizar sección activa
             setActiveSection(getActiveSection());
-            
+
             setLastScrollY(currentScrollY);
         }, 100);
 
@@ -189,22 +188,21 @@ const MainHeader = ({ className = "" }: MainHeaderProps) => {
     return (
         <motion.header
             initial={{ y: -100 }}
-            animate={{ 
+            animate={{
                 y: isVisible ? 0 : -100,
                 opacity: isVisible ? 1 : 0
             }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${className} ${
-                isScrolled 
-                    ? 'bg-white/95 backdrop-blur-lg shadow-lg border-b border-gray-100' 
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${className} ${isScrolled
+                    ? 'bg-white/95 backdrop-blur-lg shadow-lg border-b border-gray-100'
                     : 'bg-white/90 backdrop-blur-sm'
-            }`}
+                }`}
             ref={menuRef}
         >
             <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-20">
                     {/* Logo */}
-                    <motion.div 
+                    <motion.div
                         className="flex items-center space-x-3 flex-shrink-0"
                         whileHover={{ scale: 1.05 }}
                         transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -244,16 +242,15 @@ const MainHeader = ({ className = "" }: MainHeaderProps) => {
                                         href={item.href}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className={`group relative flex items-center space-x-2 px-4 py-2 rounded-xl font-medium transition-all duration-300 hover:bg-gradient-to-r hover:${item.gradient} hover:text-white ${
-                                            activeSection === index ? 
-                                            `bg-gradient-to-r ${item.gradient} text-white shadow-lg` : 
-                                            `${item.color} hover:scale-105`
-                                        }`}
+                                        className={`group relative flex items-center space-x-2 px-4 py-2 rounded-xl font-medium transition-all duration-300 hover:bg-gradient-to-r hover:${item.gradient} hover:text-white ${activeSection === index ?
+                                                `bg-gradient-to-r ${item.gradient} text-white shadow-lg` :
+                                                `${item.color} hover:scale-105`
+                                            }`}
                                     >
                                         <span className="text-lg">{item.icon}</span>
                                         <span className="hidden xl:inline">{item.label}</span>
                                         <span className="xl:hidden">{item.shortLabel || item.label}</span>
-                                        
+
                                         <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-black text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
                                             {item.description}
                                         </div>
@@ -261,16 +258,15 @@ const MainHeader = ({ className = "" }: MainHeaderProps) => {
                                 ) : (
                                     <button
                                         onClick={() => handleMenuClick(item.href)}
-                                        className={`group relative flex items-center space-x-2 px-4 py-2 rounded-xl font-medium transition-all duration-300 hover:bg-gradient-to-r hover:${item.gradient} hover:text-white ${
-                                            activeSection === index ? 
-                                            `bg-gradient-to-r ${item.gradient} text-white shadow-lg` : 
-                                            `${item.color} hover:scale-105`
-                                        }`}
+                                        className={`group relative flex items-center space-x-2 px-4 py-2 rounded-xl font-medium transition-all duration-300 hover:bg-gradient-to-r hover:${item.gradient} hover:text-white ${activeSection === index ?
+                                                `bg-gradient-to-r ${item.gradient} text-white shadow-lg` :
+                                                `${item.color} hover:scale-105`
+                                            }`}
                                     >
                                         <span className="text-lg">{item.icon}</span>
                                         <span className="hidden xl:inline">{item.label}</span>
                                         <span className="xl:hidden">{item.shortLabel || item.label}</span>
-                                        
+
                                         <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-black text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
                                             {item.description}
                                         </div>
@@ -282,7 +278,7 @@ const MainHeader = ({ className = "" }: MainHeaderProps) => {
 
                     {/* Información de contacto (Desktop) */}
                     <div className="hidden xl:flex items-center space-x-6">
-                        <motion.div 
+                        <motion.div
                             className="flex items-center space-x-2 text-sm text-gray-600"
                             whileHover={{ scale: 1.05 }}
                         >
@@ -292,8 +288,8 @@ const MainHeader = ({ className = "" }: MainHeaderProps) => {
                                 <div className="text-xs">S: 9:00-14:00</div>
                             </div>
                         </motion.div>
-                        
-                        <motion.div 
+
+                        <motion.div
                             className="flex items-center space-x-2 text-sm text-gray-600"
                             whileHover={{ scale: 1.05 }}
                         >
@@ -364,7 +360,7 @@ const MainHeader = ({ className = "" }: MainHeaderProps) => {
                             className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
                             onClick={() => setIsOpen(false)}
                         />
-                        
+
                         {/* Menú */}
                         <motion.div
                             initial={{ x: "100%", opacity: 0 }}
@@ -385,7 +381,7 @@ const MainHeader = ({ className = "" }: MainHeaderProps) => {
                                             <p className="text-sm text-gray-600">Tu salud es nuestra prioridad</p>
                                         </div>
                                     </div>
-                                    
+
                                     <div className="space-y-2 text-sm text-gray-600">
                                         <div className="flex items-center space-x-2">
                                             <FaClock className="text-blue-600 w-4 h-4" />
@@ -412,18 +408,16 @@ const MainHeader = ({ className = "" }: MainHeaderProps) => {
                                                     href={item.href}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className={`flex items-center space-x-4 p-4 rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:${item.gradient} hover:text-white group ${
-                                                        activeSection === index ? 
-                                                        `bg-gradient-to-r ${item.gradient} text-white shadow-lg` : 
-                                                        'hover:scale-105'
-                                                    }`}
+                                                    className={`flex items-center space-x-4 p-4 rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:${item.gradient} hover:text-white group ${activeSection === index ?
+                                                            `bg-gradient-to-r ${item.gradient} text-white shadow-lg` :
+                                                            'hover:scale-105'
+                                                        }`}
                                                     onClick={() => setIsOpen(false)}
                                                 >
-                                                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
-                                                        activeSection === index ? 
-                                                        'bg-white/20' : 
-                                                        `bg-gradient-to-r ${item.gradient} text-white group-hover:bg-white/20`
-                                                    }`}>
+                                                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${activeSection === index ?
+                                                            'bg-white/20' :
+                                                            `bg-gradient-to-r ${item.gradient} text-white group-hover:bg-white/20`
+                                                        }`}>
                                                         <span className="text-xl">{item.icon}</span>
                                                     </div>
                                                     <div className="flex-1">
@@ -434,17 +428,15 @@ const MainHeader = ({ className = "" }: MainHeaderProps) => {
                                             ) : (
                                                 <button
                                                     onClick={() => handleMenuClick(item.href)}
-                                                    className={`w-full flex items-center space-x-4 p-4 rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:${item.gradient} hover:text-white group ${
-                                                        activeSection === index ? 
-                                                        `bg-gradient-to-r ${item.gradient} text-white shadow-lg` : 
-                                                        'hover:scale-105'
-                                                    }`}
+                                                    className={`w-full flex items-center space-x-4 p-4 rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:${item.gradient} hover:text-white group ${activeSection === index ?
+                                                            `bg-gradient-to-r ${item.gradient} text-white shadow-lg` :
+                                                            'hover:scale-105'
+                                                        }`}
                                                 >
-                                                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
-                                                        activeSection === index ? 
-                                                        'bg-white/20' : 
-                                                        `bg-gradient-to-r ${item.gradient} text-white group-hover:bg-white/20`
-                                                    }`}>
+                                                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${activeSection === index ?
+                                                            'bg-white/20' :
+                                                            `bg-gradient-to-r ${item.gradient} text-white group-hover:bg-white/20`
+                                                        }`}>
                                                         <span className="text-xl">{item.icon}</span>
                                                     </div>
                                                     <div className="flex-1 text-left">
