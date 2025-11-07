@@ -1,46 +1,285 @@
 "use client"
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+import { useState, useEffect, useRef } from 'react';
+import { FaPlay, FaPause, FaVolumeUp, FaVolumeMute, FaWhatsapp } from 'react-icons/fa';
 
 const BeachVideo = () => {
-  const { ref, inView } = useInView({
-    triggerOnce: false,
-    threshold: 0.1,
-  });
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [showFallback, setShowFallback] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Handlers para eventos del video
+    const handleLoadedData = () => {
+      setIsLoading(false);
+      setHasError(false);
+    };
+
+    const handleError = () => {
+      console.warn('Video failed to load, showing fallback');
+      setIsLoading(false);
+      setHasError(true);
+      setShowFallback(true);
+    };
+
+    const handleCanPlay = () => {
+      setIsLoading(false);
+      // Intentar reproducir el video
+      video.play().catch(err => {
+        console.warn('Autoplay prevented:', err);
+        setIsPlaying(false);
+      });
+    };
+
+    // Timeout de fallback por si el video no carga en 10 segundos
+    const fallbackTimeout = setTimeout(() => {
+      if (isLoading) {
+        console.warn('Video loading timeout, showing fallback');
+        setShowFallback(true);
+        setIsLoading(false);
+      }
+    }, 10000);
+
+    // Agregar event listeners
+    video.addEventListener('loadeddata', handleLoadedData);
+    video.addEventListener('canplay', handleCanPlay);
+    video.addEventListener('error', handleError);
+
+    // Cleanup
+    return () => {
+      clearTimeout(fallbackTimeout);
+      video.removeEventListener('loadeddata', handleLoadedData);
+      video.removeEventListener('canplay', handleCanPlay);
+      video.removeEventListener('error', handleError);
+    };
+  }, [isLoading]);
+
+  const togglePlay = () => {
+    const video = videoRef.current;
+    if (!video || hasError) return;
+
+    if (isPlaying) {
+      video.pause();
+      setIsPlaying(false);
+    } else {
+      video.play().then(() => {
+        setIsPlaying(true);
+      }).catch(err => {
+        console.warn('Play failed:', err);
+      });
+    }
+  };
+
+  const toggleMute = () => {
+    const video = videoRef.current;
+    if (!video || hasError) return;
+
+    video.muted = !video.muted;
+    setIsMuted(video.muted);
+  };
 
   return (
-    <div className="relative rounded-lg shadow-2xl w-full h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[80vh] overflow-hidden">
-      {/* Video */}
-      <div className="absolute inset-0 overflow-hidden rounded-lg">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover"
-        >
-          <source src="/beach.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+    <div className="relative w-full h-screen overflow-hidden">
+      {/* Loading State */}
+      {isLoading && !showFallback && (
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-green-600 to-blue-800 flex items-center justify-center z-20">
+          <div className="text-center text-white">
+            <div className="relative">
+              <div className="animate-spin rounded-full h-16 w-16 border-4 border-white border-t-transparent mx-auto mb-4"></div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-2xl">🏖️</span>
+              </div>
+            </div>
+            <p className="text-xl font-semibold">Cargando experiencia...</p>
+            <p className="text-sm text-blue-200 mt-2">Preparando el ambiente perfecto</p>
+          </div>
+        </div>
+      )}
+
+      {/* Video Background o Fallback */}
+      <div className="absolute inset-0">
+        {!showFallback ? (
+          <>
+            <video
+              ref={videoRef}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              className="w-full h-full object-cover"
+              onLoadedData={() => setIsLoading(false)}
+              onError={() => setShowFallback(true)}
+            >
+              <source src="/beach.mp4" type="video/mp4" />
+              <source src="/beach.webm" type="video/webm" />
+              Your browser does not support the video tag.
+            </video>
+            
+            {/* Video Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50"></div>
+          </>
+        ) : (
+          /* Fallback Background - Imagen estática con animación */
+          <div className="w-full h-full relative">
+            <div 
+              className="w-full h-full bg-cover bg-center bg-no-repeat"
+              style={{
+                backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('/interior.png')`
+              }}
+            ></div>
+            
+            {/* Animación de olas para simular movimiento */}
+            <div className="absolute bottom-0 left-0 right-0 h-32 overflow-hidden">
+              <div className="wave wave1"></div>
+              <div className="wave wave2"></div>
+              <div className="wave wave3"></div>
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Contenedor con efecto de espejo */}
-      <motion.div
-        ref={ref}
-        className="absolute inset-0 flex items-center justify-center p-4"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 50 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-      >
-        <div className="bg-white bg-opacity-20 p-4 sm:p-6 rounded-lg shadow-xl backdrop-blur-md">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-green-50 mb-4 text-center">
-            FARMACIA SANTA MARIA
-          </h1>
-          <p className="text-lg sm:text-xl md:text-2xl text-center text-beige-300">
-            Cuidamos de tu salud.
-          </p>
+      {/* Controles del Video */}
+      {!showFallback && !isLoading && (
+        <div className="absolute bottom-6 right-6 flex space-x-3 z-20">
+          <button
+            onClick={togglePlay}
+            className="bg-white/20 backdrop-blur-md rounded-full p-3 text-white hover:bg-white/30 transition-all duration-300 transform hover:scale-110"
+            title={isPlaying ? 'Pausar' : 'Reproducir'}
+          >
+            {isPlaying ? <FaPause className="text-lg" /> : <FaPlay className="text-lg ml-0.5" />}
+          </button>
+          
+          <button
+            onClick={toggleMute}
+            className="bg-white/20 backdrop-blur-md rounded-full p-3 text-white hover:bg-white/30 transition-all duration-300 transform hover:scale-110"
+            title={isMuted ? 'Activar sonido' : 'Silenciar'}
+          >
+            {isMuted ? <FaVolumeMute className="text-lg" /> : <FaVolumeUp className="text-lg" />}
+          </button>
         </div>
-      </motion.div>
+      )}
+
+      {/* Indicador de Fallback */}
+      {showFallback && (
+        <div className="absolute bottom-6 left-6 bg-white/20 backdrop-blur-md rounded-lg px-4 py-2 text-white text-sm z-20">
+          🌊 Modo de compatibilidad activado
+        </div>
+      )}
+
+      {/* Hero Content */}
+      <div 
+        className="absolute inset-0 flex items-center justify-center p-4 z-10"
+        style={{
+          opacity: 0,
+          transform: 'translateY(30px)',
+          animation: 'fadeInUp 1s ease-out 0.5s forwards'
+        }}
+      >
+        <div className="text-center text-white max-w-4xl">
+          <div className="mb-8">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-white/20 backdrop-blur-md rounded-full mb-6">
+              <span className="text-4xl">⚕️</span>
+            </div>
+          </div>
+          
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            Farmacia
+            <br />
+            <span className="bg-gradient-to-r from-blue-300 to-green-300 bg-clip-text text-transparent">
+              Santa María
+            </span>
+          </h1>
+          
+          <p className="text-xl md:text-2xl mb-8 text-gray-200 leading-relaxed max-w-2xl mx-auto">
+            Tu salud y bienestar son nuestra prioridad en La Cala del Moral. 
+            Profesionalidad, cercanía y confianza desde 2010.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a 
+              href="/Reservas"
+              className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-blue-600 to-green-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-green-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            >
+              📅 Reservar Consulta
+            </a>
+            <a 
+              href="/encargos"
+              className="inline-flex items-center justify-center px-8 py-4 bg-white/20 backdrop-blur-md text-white font-semibold rounded-xl hover:bg-white/30 transition-all duration-300 transform hover:scale-105 border border-white/30"
+            >
+              🛒 Hacer Encargo
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Botón flotante de WhatsApp */}
+      <a
+        href="https://wa.me/630950016"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 left-6 z-30 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 animate-pulse hover:animate-none"
+        title="Contactar por WhatsApp"
+      >
+        <FaWhatsapp className="text-2xl" />
+      </a>
+
+      {/* Estilo para las olas animadas del fallback */}
+      <style jsx>{`
+        .wave {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 80px;
+          background: linear-gradient(45deg, rgba(59, 130, 246, 0.3), rgba(16, 185, 129, 0.3));
+          border-radius: 100% 100% 0 0;
+          transform-origin: bottom;
+          animation: wave 3s ease-in-out infinite;
+        }
+        
+        .wave1 {
+          animation-delay: 0s;
+          opacity: 0.8;
+        }
+        
+        .wave2 {
+          animation-delay: -1s;
+          opacity: 0.6;
+          height: 60px;
+        }
+        
+        .wave3 {
+          animation-delay: -2s;
+          opacity: 0.4;
+          height: 40px;
+        }
+        
+        @keyframes wave {
+          0%, 100% {
+            transform: scaleX(1) scaleY(1);
+          }
+          50% {
+            transform: scaleX(1.2) scaleY(0.8);
+          }
+        }
+        
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </div>
   );
 };

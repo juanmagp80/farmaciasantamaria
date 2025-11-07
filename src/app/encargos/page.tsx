@@ -83,81 +83,210 @@ const OrdersPage: React.FC = () => {
         <>
             <MainHeader className='main-header-solid' />
 
-            <div className="relative w-full pt-24 min-h-screen bg-cover bg-center" style={{ backgroundImage: 'url(/interior.png)' }}>
+            <div className="relative w-full pt-24 min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+                <div className="absolute inset-0 bg-cover bg-center opacity-10" style={{ backgroundImage: 'url(/interior.png)' }}></div>
+                
+                <div className="relative z-10 max-w-7xl mx-auto p-4 sm:p-8">
+                    {/* Header Section */}
+                    <div className="text-center mb-12 mt-20">
+                        <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+                            Solicitar <span className="text-gradient">Encargo</span>
+                        </h1>
+                        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                            Realiza tu pedido de forma cómoda y segura. Te contactaremos para confirmar disponibilidad y coordinar la entrega.
+                        </p>
+                        <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-6 max-w-2xl mx-auto">
+                            <p className="text-yellow-800">
+                                <strong>Nota:</strong> Esta funcionalidad no está operativa para medicamentos con receta médica. Para esos casos, contáctanos directamente.
+                            </p>
+                        </div>
+                    </div>
 
-                <div className="absolute inset-0 bg-black opacity-50"></div>
-                <div className="relative z-10 p-4 sm:p-8 max-w-5xl mx-auto">
-                    <div className="bg-white bg-opacity-80 rounded-lg shadow-lg p-6 sm:p-8 mt-20 mb-24"> {/* Agregado mb-24 */}
-                        <h1 className="text-2xl sm:text-3xl font-bold text-uppercase mb-6 text-center">Solicitar encargo
-                            (Esta funcionalidad no está operativa para medicamentos)</h1>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="space-y-4">
-                                {/* Formulario de contacto */}
-                                <form onSubmit={handleSubmit}>
-                                    <div className="mb-4">
-                                        <label className="block text-gray-900">Nombre</label>
-                                        <input name="nombre" type="text" className="mt-1 block w-full p-2 border rounded" placeholder="Nombre" required />
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        {/* Formulario Principal */}
+                        <div className="lg:col-span-2">
+                            <div className="card p-8">
+                                <form onSubmit={handleSubmit} className="space-y-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label className="form-label">
+                                                <span className="text-red-500">*</span> Nombre completo
+                                            </label>
+                                            <input 
+                                                name="nombre" 
+                                                type="text" 
+                                                className="form-input" 
+                                                placeholder="Tu nombre completo" 
+                                                required 
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="form-label">
+                                                <span className="text-red-500">*</span> Email
+                                            </label>
+                                            <input 
+                                                name="email" 
+                                                type="email" 
+                                                className="form-input" 
+                                                placeholder="tu@email.com" 
+                                                required 
+                                            />
+                                        </div>
                                     </div>
-                                    <div className="mb-4">
-                                        <label className="block text-gray-900">Email</label>
-                                        <input name="email" type="email" className="mt-1 block w-full p-2 border rounded" placeholder="Email" required />
+
+                                    <div>
+                                        <label className="form-label">Teléfono de contacto</label>
+                                        <input 
+                                            name="telefono" 
+                                            type="tel" 
+                                            className="form-input" 
+                                            placeholder="+34 600 000 000" 
+                                        />
+                                        <p className="text-sm text-gray-500 mt-1">Opcional, pero recomendado para una comunicación más rápida</p>
                                     </div>
-                                    <div className="mb-4">
-                                        <label className="block text-gray-900">Teléfono</label>
-                                        <input name="telefono" type="tel" className="mt-1 block w-full p-2 border rounded" placeholder="Teléfono" />
+
+                                    <div>
+                                        <label className="form-label">
+                                            <span className="text-red-500">*</span> Detalle del pedido
+                                        </label>
+                                        <textarea 
+                                            name="pedido" 
+                                            className="form-input" 
+                                            placeholder="Describe detalladamente los productos que necesitas: nombre, marca, cantidad, etc." 
+                                            rows={6} 
+                                            required
+                                        ></textarea>
+                                        <p className="text-sm text-gray-500 mt-1">
+                                            Incluye toda la información posible para procesar tu pedido correctamente
+                                        </p>
                                     </div>
-                                    <div className="mb-4">
-                                        <label className="block text-gray-900">Pedido</label>
-                                        <textarea name="pedido" className="mt-1 block w-full p-2 border rounded" placeholder="Escribe tu pedido aquí" rows={4} required></textarea>
+
+                                    <div className="bg-blue-50 rounded-lg p-4">
+                                        <h3 className="font-semibold text-blue-800 mb-2">¿Qué puedes encargar?</h3>
+                                        <ul className="text-sm text-blue-700 space-y-1">
+                                            <li>✓ Productos de parafarmacia</li>
+                                            <li>✓ Cosméticos y cuidado personal</li>
+                                            <li>✓ Suplementos nutricionales</li>
+                                            <li>✓ Productos de higiene</li>
+                                            <li>✓ Medicamentos sin receta</li>
+                                        </ul>
                                     </div>
-                                    <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded" disabled={isSubmitting}>
-                                        {isSubmitting ? 'Enviando...' : 'Enviar'}
+
+                                    <button 
+                                        type="submit" 
+                                        className={`btn-primary w-full ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}
+                                        disabled={isSubmitting}
+                                    >
+                                        {isSubmitting ? (
+                                            <>
+                                                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                </svg>
+                                                Enviando pedido...
+                                            </>
+                                        ) : (
+                                            <>
+                                                🛒 Enviar Pedido
+                                            </>
+                                        )}
                                     </button>
                                 </form>
                             </div>
-                            <div className="space-y-4">
-                                {/* Información de contacto */}
-                                <h2 className="text-xl sm:text-2xl font-semibold">Contacto</h2>
-                                <p>
+                        </div>
+
+                        {/* Información de Contacto */}
+                        <div className="space-y-6">
+                            <div className="card p-6">
+                                <h2 className="text-2xl font-bold text-gray-900 mb-6">Información de Contacto</h2>
+                                
+                                <div className="space-y-4">
                                     <a
                                         href="https://www.google.com/maps?q=Avda+M%C3%A1laga+36,+La+Cala+del+Moral,+Rinc%C3%B3n+de+la+Victoria"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex items-center text-blue-500 underline"
+                                        className="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-colors"
                                     >
-                                        <FaMapMarkerAlt className="mr-2 text-lg sm:text-xl" />
-                                        <strong>Dirección: Avda Málaga 36, La Cala del Moral</strong>
+                                        <FaMapMarkerAlt className="text-red-500 text-xl mr-3 flex-shrink-0" />
+                                        <div>
+                                            <div className="font-semibold text-gray-900">Dirección</div>
+                                            <div className="text-gray-600">Avda Málaga 36, La Cala del Moral</div>
+                                        </div>
                                     </a>
-                                </p>
-                                <p>
+
                                     <a
                                         href="https://wa.me/630950016"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex text-lg items-center text-green-600"
+                                        className="flex items-center p-3 rounded-lg hover:bg-green-50 transition-colors"
                                     >
-                                        <FaWhatsapp className="mr-2 text-lg sm:text-xl" />
-                                        <strong>Teléfono Móvil: 630 95 00 16</strong>
+                                        <FaWhatsapp className="text-green-500 text-xl mr-3 flex-shrink-0" />
+                                        <div>
+                                            <div className="font-semibold text-gray-900">WhatsApp</div>
+                                            <div className="text-gray-600">630 95 00 16</div>
+                                        </div>
                                     </a>
-                                </p>
-                                <p>
+
                                     <a
                                         href="tel:951921399"
-                                        className="flex items-center text-gray-800"
+                                        className="flex items-center p-3 rounded-lg hover:bg-blue-50 transition-colors"
                                     >
-                                        <FaPhoneAlt className="mr-2 text-lg sm:text-xl" />
-                                        <strong>Teléfono Fijo: 951921399 </strong>
+                                        <FaPhoneAlt className="text-blue-500 text-xl mr-3 flex-shrink-0" />
+                                        <div>
+                                            <div className="font-semibold text-gray-900">Teléfono</div>
+                                            <div className="text-gray-600">951 921 399</div>
+                                        </div>
                                     </a>
-                                </p>
-                                <p>
+
                                     <a
-                                        href="mailto:contacto@ejemplo.com"
-                                        className="flex items-center text-blue-500 underline"
+                                        href="mailto:contacto@farmaciasantamaria.com"
+                                        className="flex items-center p-3 rounded-lg hover:bg-purple-50 transition-colors"
                                     >
-                                        <FaEnvelope className="mr-2 text-lg sm:text-xl" />
-                                        <strong>Email: contacto@ejemplo.com</strong>
+                                        <FaEnvelope className="text-purple-500 text-xl mr-3 flex-shrink-0" />
+                                        <div>
+                                            <div className="font-semibold text-gray-900">Email</div>
+                                            <div className="text-gray-600">contacto@farmaciasantamaria.com</div>
+                                        </div>
                                     </a>
-                                </p>
+                                </div>
+                            </div>
+
+                            {/* Horarios */}
+                            <div className="card p-6">
+                                <h3 className="text-lg font-bold text-gray-900 mb-4">Horarios de Atención</h3>
+                                <div className="space-y-2 text-sm">
+                                    <div className="flex justify-between">
+                                        <span className="font-medium">Lunes - Viernes</span>
+                                        <span>8:30 - 21:00</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span className="font-medium">Sábados</span>
+                                        <span>9:00 - 14:00</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span className="font-medium">Domingos</span>
+                                        <span className="text-red-500">Cerrado</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Proceso de pedido */}
+                            <div className="card p-6">
+                                <h3 className="text-lg font-bold text-gray-900 mb-4">¿Cómo funciona?</h3>
+                                <div className="space-y-3">
+                                    <div className="flex items-start">
+                                        <div className="bg-green-100 text-green-800 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">1</div>
+                                        <p className="text-sm text-gray-600">Envías tu pedido a través del formulario</p>
+                                    </div>
+                                    <div className="flex items-start">
+                                        <div className="bg-green-100 text-green-800 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">2</div>
+                                        <p className="text-sm text-gray-600">Verificamos disponibilidad y te contactamos</p>
+                                    </div>
+                                    <div className="flex items-start">
+                                        <div className="bg-green-100 text-green-800 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">3</div>
+                                        <p className="text-sm text-gray-600">Coordinas recogida o entrega</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
