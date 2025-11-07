@@ -1,92 +1,23 @@
 "use client"
-import { useState, useEffect, useRef } from 'react';
-import { FaPlay, FaPause, FaVolumeUp, FaVolumeMute, FaWhatsapp } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import { FaWhatsapp } from 'react-icons/fa';
 
 const BeachVideo = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
-  const [showFallback, setShowFallback] = useState(false);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    // Handlers para eventos del video
-    const handleLoadedData = () => {
+    // Simular un breve tiempo de carga para la imagen de fondo
+    const timer = setTimeout(() => {
       setIsLoading(false);
-      setHasError(false);
-    };
+    }, 1000);
 
-    const handleError = () => {
-      console.warn('Video failed to load, showing fallback');
-      setIsLoading(false);
-      setHasError(true);
-      setShowFallback(true);
-    };
-
-    const handleCanPlay = () => {
-      setIsLoading(false);
-      // Intentar reproducir el video
-      video.play().catch(err => {
-        console.warn('Autoplay prevented:', err);
-        setIsPlaying(false);
-      });
-    };
-
-    // Timeout de fallback por si el video no carga en 10 segundos
-    const fallbackTimeout = setTimeout(() => {
-      if (isLoading) {
-        console.warn('Video loading timeout, showing fallback');
-        setShowFallback(true);
-        setIsLoading(false);
-      }
-    }, 10000);
-
-    // Agregar event listeners
-    video.addEventListener('loadeddata', handleLoadedData);
-    video.addEventListener('canplay', handleCanPlay);
-    video.addEventListener('error', handleError);
-
-    // Cleanup
-    return () => {
-      clearTimeout(fallbackTimeout);
-      video.removeEventListener('loadeddata', handleLoadedData);
-      video.removeEventListener('canplay', handleCanPlay);
-      video.removeEventListener('error', handleError);
-    };
-  }, [isLoading]);
-
-  const togglePlay = () => {
-    const video = videoRef.current;
-    if (!video || hasError) return;
-
-    if (isPlaying) {
-      video.pause();
-      setIsPlaying(false);
-    } else {
-      video.play().then(() => {
-        setIsPlaying(true);
-      }).catch(err => {
-        console.warn('Play failed:', err);
-      });
-    }
-  };
-
-  const toggleMute = () => {
-    const video = videoRef.current;
-    if (!video || hasError) return;
-
-    video.muted = !video.muted;
-    setIsMuted(video.muted);
-  };
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
       {/* Loading State */}
-      {isLoading && !showFallback && (
+      {isLoading && (
         <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-green-600 to-blue-800 flex items-center justify-center z-20">
           <div className="text-center text-white">
             <div className="relative">
@@ -101,79 +32,27 @@ const BeachVideo = () => {
         </div>
       )}
 
-      {/* Video Background o Fallback */}
+      {/* Background Image */}
       <div className="absolute inset-0">
-        {!showFallback ? (
-          <>
-            <video
-              ref={videoRef}
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="metadata"
-              className="w-full h-full object-cover"
-              onLoadedData={() => setIsLoading(false)}
-              onError={() => setShowFallback(true)}
-            >
-              <source src="/beach.mp4" type="video/mp4" />
-              <source src="/beach.webm" type="video/webm" />
-              Your browser does not support the video tag.
-            </video>
-            
-            {/* Video Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50"></div>
-          </>
-        ) : (
-          /* Fallback Background - Imagen estática con animación */
-          <div className="w-full h-full relative">
-            <div 
-              className="w-full h-full bg-cover bg-center bg-no-repeat"
-              style={{
-                backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('/interior.png')`
-              }}
-            ></div>
-            
-            {/* Animación de olas para simular movimiento */}
-            <div className="absolute bottom-0 left-0 right-0 h-32 overflow-hidden">
-              <div className="wave wave1"></div>
-              <div className="wave wave2"></div>
-              <div className="wave wave3"></div>
-            </div>
+        <div className="w-full h-full relative">
+          <div
+            className="w-full h-full bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('/interior.png')`
+            }}
+          ></div>
+
+          {/* Animación de olas para simular movimiento */}
+          <div className="absolute bottom-0 left-0 right-0 h-32 overflow-hidden">
+            <div className="wave wave1"></div>
+            <div className="wave wave2"></div>
+            <div className="wave wave3"></div>
           </div>
-        )}
+        </div>
       </div>
 
-      {/* Controles del Video */}
-      {!showFallback && !isLoading && (
-        <div className="absolute bottom-6 right-6 flex space-x-3 z-20">
-          <button
-            onClick={togglePlay}
-            className="bg-white/20 backdrop-blur-md rounded-full p-3 text-white hover:bg-white/30 transition-all duration-300 transform hover:scale-110"
-            title={isPlaying ? 'Pausar' : 'Reproducir'}
-          >
-            {isPlaying ? <FaPause className="text-lg" /> : <FaPlay className="text-lg ml-0.5" />}
-          </button>
-          
-          <button
-            onClick={toggleMute}
-            className="bg-white/20 backdrop-blur-md rounded-full p-3 text-white hover:bg-white/30 transition-all duration-300 transform hover:scale-110"
-            title={isMuted ? 'Activar sonido' : 'Silenciar'}
-          >
-            {isMuted ? <FaVolumeMute className="text-lg" /> : <FaVolumeUp className="text-lg" />}
-          </button>
-        </div>
-      )}
-
-      {/* Indicador de Fallback */}
-      {showFallback && (
-        <div className="absolute bottom-6 left-6 bg-white/20 backdrop-blur-md rounded-lg px-4 py-2 text-white text-sm z-20">
-          🌊 Modo de compatibilidad activado
-        </div>
-      )}
-
       {/* Hero Content */}
-      <div 
+      <div
         className="absolute inset-0 flex items-center justify-center p-4 z-10"
         style={{
           opacity: 0,
@@ -183,32 +62,36 @@ const BeachVideo = () => {
       >
         <div className="text-center text-white max-w-4xl">
           <div className="mb-8">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-white/20 backdrop-blur-md rounded-full mb-6">
-              <span className="text-4xl">⚕️</span>
+            <div className="inline-flex items-center justify-center w-32 h-32 bg-white rounded-full mb-6 shadow-2xl border-4 border-white/30">
+              <img
+                src="/santamaria2.png"
+                alt="Farmacia Santa María"
+                className="w-24 h-24 object-contain"
+              />
             </div>
           </div>
-          
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
             Farmacia
             <br />
             <span className="bg-gradient-to-r from-blue-300 to-green-300 bg-clip-text text-transparent">
               Santa María
             </span>
           </h1>
-          
+
           <p className="text-xl md:text-2xl mb-8 text-gray-200 leading-relaxed max-w-2xl mx-auto">
-            Tu salud y bienestar son nuestra prioridad en La Cala del Moral. 
+            Tu salud y bienestar son nuestra prioridad en La Cala del Moral.
             Profesionalidad, cercanía y confianza desde 2010.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a 
+            <a
               href="/Reservas"
               className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-blue-600 to-green-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-green-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
               📅 Reservar Consulta
             </a>
-            <a 
+            <a
               href="/encargos"
               className="inline-flex items-center justify-center px-8 py-4 bg-white/20 backdrop-blur-md text-white font-semibold rounded-xl hover:bg-white/30 transition-all duration-300 transform hover:scale-105 border border-white/30"
             >

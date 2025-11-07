@@ -92,8 +92,8 @@ const Card: React.FC<{ miembro: Miembro; index: number }> = ({ miembro, index })
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                             
-                            {/* Badge de cargo */}
-                            <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full">
+                            {/* Badge de cargo - movido a la parte inferior */}
+                            <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full">
                                 <span className="text-xs font-semibold text-blue-700">
                                     {miembro.cargo.includes('Farmacéutica') ? '👩‍⚕️' : '👨‍💼'} {miembro.cargo}
                                 </span>
