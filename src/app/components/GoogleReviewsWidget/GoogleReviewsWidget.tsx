@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import { FaStar, FaGoogle, FaQuoteLeft, FaUsers, FaThumbsUp, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaExternalLinkAlt, FaGoogle, FaQuoteLeft, FaStar, FaThumbsUp } from 'react-icons/fa';
 
 interface Review {
     id: string;
@@ -24,7 +24,7 @@ const GoogleReviewsWidget: React.FC = () => {
             date: '2024-10-15',
         },
         {
-            id: '2', 
+            id: '2',
             author: 'Carlos Ruiz',
             rating: 5,
             text: 'Farmacia de confianza con un trato muy personalizado. El servicio de consultas online es fantástico.',
@@ -82,23 +82,22 @@ const GoogleReviewsWidget: React.FC = () => {
         return Array.from({ length: 5 }, (_, index) => (
             <FaStar
                 key={index}
-                className={`w-4 h-4 ${
-                    index < Math.floor(rating) 
-                        ? 'text-yellow-400' 
-                        : index < rating 
-                        ? 'text-yellow-300' 
-                        : 'text-gray-300'
-                }`}
+                className={`w-4 h-4 ${index < Math.floor(rating)
+                        ? 'text-yellow-400'
+                        : index < rating
+                            ? 'text-yellow-300'
+                            : 'text-gray-300'
+                    }`}
             />
         ));
     };
 
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
-        return date.toLocaleDateString('es-ES', { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
+        return date.toLocaleDateString('es-ES', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
         });
     };
 
@@ -116,10 +115,10 @@ const GoogleReviewsWidget: React.FC = () => {
                         Opiniones de <span className="bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">Clientes</span>
                     </h2>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                        La confianza de nuestros clientes es nuestro mayor logro. 
+                        La confianza de nuestros clientes es nuestro mayor logro.
                         Lee lo que dicen sobre nuestra farmacia.
                     </p>
-                    
+
                     {/* Estadísticas de reseñas */}
                     <div className="mt-8 flex justify-center">
                         <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
@@ -151,21 +150,19 @@ const GoogleReviewsWidget: React.FC = () => {
                     <div className="inline-flex bg-white/80 backdrop-blur-sm rounded-xl p-2 shadow-lg">
                         <button
                             onClick={() => setShowWidget(false)}
-                            className={`px-6 py-2 rounded-lg font-semibold transition-all duration-300 ${
-                                !showWidget 
-                                    ? 'bg-gradient-to-r from-blue-600 to-green-600 text-white shadow-md' 
+                            className={`px-6 py-2 rounded-lg font-semibold transition-all duration-300 ${!showWidget
+                                    ? 'bg-gradient-to-r from-blue-600 to-green-600 text-white shadow-md'
                                     : 'text-gray-600 hover:text-blue-600'
-                            }`}
+                                }`}
                         >
                             Destacadas
                         </button>
                         <button
                             onClick={() => setShowWidget(true)}
-                            className={`px-6 py-2 rounded-lg font-semibold transition-all duration-300 ${
-                                showWidget 
-                                    ? 'bg-gradient-to-r from-blue-600 to-green-600 text-white shadow-md' 
+                            className={`px-6 py-2 rounded-lg font-semibold transition-all duration-300 ${showWidget
+                                    ? 'bg-gradient-to-r from-blue-600 to-green-600 text-white shadow-md'
                                     : 'text-gray-600 hover:text-blue-600'
-                            }`}
+                                }`}
                         >
                             Todas las reseñas
                         </button>
@@ -203,14 +200,14 @@ const GoogleReviewsWidget: React.FC = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div className="relative">
                                         <FaQuoteLeft className="absolute -top-1 -left-1 w-4 h-4 text-blue-300" />
                                         <p className="text-gray-700 leading-relaxed pl-6 italic">
                                             &ldquo;{review.text}&rdquo;
                                         </p>
                                     </div>
-                                    
+
                                     <div className="mt-4 flex items-center justify-between">
                                         <div className="flex items-center space-x-2 text-green-600">
                                             <FaThumbsUp className="w-3 h-3" />
@@ -229,7 +226,7 @@ const GoogleReviewsWidget: React.FC = () => {
                                     ¿Ya has visitado nuestra farmacia?
                                 </h3>
                                 <p className="text-gray-600 mb-6">
-                                    Tu opinión es muy importante para nosotros y para otros clientes. 
+                                    Tu opinión es muy importante para nosotros y para otros clientes.
                                     Comparte tu experiencia en Google.
                                 </p>
                                 <a

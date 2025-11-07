@@ -1,7 +1,7 @@
 "use client";
 import { motion } from 'framer-motion';
 import React, { useState } from 'react';
-import { FaQuoteLeft, FaStar, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaQuoteLeft, FaStar } from 'react-icons/fa';
 
 interface Testimonial {
   name: string;
@@ -90,7 +90,7 @@ const Testimonials: React.FC = () => {
             Lo que dicen nuestros <span className="text-green-600">clientes</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            La confianza de nuestros clientes es nuestro mayor logro. 
+            La confianza de nuestros clientes es nuestro mayor logro.
             Conoce las experiencias de quienes ya forman parte de nuestra familia.
           </p>
         </motion.div>
@@ -158,11 +158,10 @@ const Testimonials: React.FC = () => {
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                index === currentIndex 
-                  ? 'bg-green-600 scale-110' 
+              className={`w-3 h-3 rounded-full transition-all duration-200 ${index === currentIndex
+                  ? 'bg-green-600 scale-110'
                   : 'bg-gray-300 hover:bg-gray-400'
-              }`}
+                }`}
             />
           ))}
         </div>

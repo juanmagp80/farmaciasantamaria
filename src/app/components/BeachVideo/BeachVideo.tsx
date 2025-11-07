@@ -1,7 +1,7 @@
 "use client"
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
-import Image from 'next/image';
 
 const BeachVideo = () => {
   const [isLoading, setIsLoading] = useState(true);
