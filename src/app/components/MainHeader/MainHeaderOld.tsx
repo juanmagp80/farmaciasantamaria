@@ -14,9 +14,9 @@ import {
     FaClock,
     FaMapMarkerAlt,
     FaStar,
-    FaHeartbeat
+    FaHeartbeat,
+    FaPrescriptionBottleAlt
 } from 'react-icons/fa';
-import { BiPharmacy } from 'react-icons/bi';
 
 interface MainHeaderProps {
     className?: string;
@@ -215,7 +215,7 @@ const MainHeader = ({ className = "" }: MainHeaderProps) => {
                                 whileHover={{ rotate: 360 }}
                                 transition={{ duration: 0.6, ease: "easeInOut" }}
                             >
-                                <BiPharmacy className="text-white text-2xl" />
+                                <FaPrescriptionBottleAlt className="text-white text-2xl" />
                             </motion.div>
                             <motion.div
                                 className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center"
@@ -378,7 +378,7 @@ const MainHeader = ({ className = "" }: MainHeaderProps) => {
                                 <div className="mb-8 p-4 bg-gradient-to-r from-blue-50 to-green-50 rounded-2xl">
                                     <div className="flex items-center space-x-3 mb-3">
                                         <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
-                                            <BiPharmacy className="text-white text-lg" />
+                                            <FaPrescriptionBottleAlt className="text-white text-lg" />
                                         </div>
                                         <div>
                                             <h3 className="font-bold text-gray-800">Farmacia Santa María</h3>
