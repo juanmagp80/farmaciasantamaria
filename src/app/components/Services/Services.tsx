@@ -1,4 +1,3 @@
-import React from 'react';
 
 const Services = () => {
   const services = [
@@ -45,8 +44,8 @@ const Services = () => {
   ];
 
   return (
-    <section 
-      id="Servicios" 
+    <section
+      id="Servicios"
       style={{
         padding: '80px 20px',
         backgroundColor: '#f8fafc',
@@ -67,7 +66,7 @@ const Services = () => {
             color: '#1f2937',
             marginBottom: '20px'
           }}>
-            Nuestros <span style={{color: '#059669'}}>Servicios</span>
+            Nuestros <span style={{ color: '#059669' }}>Servicios</span>
           </h2>
           <p style={{
             fontSize: '1.2rem',
@@ -76,7 +75,7 @@ const Services = () => {
             margin: '0 auto',
             lineHeight: '1.6'
           }}>
-            En Farmacia Santa María ofrecemos una amplia gama de servicios profesionales 
+            En Farmacia Santa María ofrecemos una amplia gama de servicios profesionales
             para cuidar de tu salud y la de tu familia.
           </p>
         </div>

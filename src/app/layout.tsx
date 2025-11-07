@@ -2,12 +2,12 @@
 import { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import { ReactNode } from 'react';
-import './globals.css';
+import ClientWrapper from './components/ClientWrapper';
 import ContactHeader from './components/ContactHeader/ContactHeader';
 import Footer from './components/Footer/Footer';
 import GoogleReviewsWidget from './components/GoogleReviewsWidget/GoogleReviewsWidget';
 import MainHeader from './components/MainHeader/MainHeader';
-import ClientWrapper from './components/ClientWrapper';
+import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Farmacia Santa María',
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
 };
 
-const poppins = Poppins({ 
+const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700'],
   subsets: ['latin'],
   display: 'swap',
@@ -30,7 +30,7 @@ interface LayoutProps {
 export default function RootLayout({ children }: LayoutProps) {
   return (
     <html lang="es" className="scroll-smooth">
-      <body 
+      <body
         className={`${poppins.className} antialiased bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen`}
         style={{
           margin: 0,
@@ -41,7 +41,7 @@ export default function RootLayout({ children }: LayoutProps) {
         }}
       >
         <ClientWrapper>
-          <div 
+          <div
             className="flex flex-col min-h-screen"
             style={{
               display: 'flex',
@@ -51,7 +51,7 @@ export default function RootLayout({ children }: LayoutProps) {
           >
             <ContactHeader />
             <MainHeader className="main-header-transparent" />
-            <main 
+            <main
               className="flex-grow"
               style={{
                 flex: '1 1 0%'

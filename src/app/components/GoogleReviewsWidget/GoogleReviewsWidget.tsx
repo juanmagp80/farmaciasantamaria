@@ -135,8 +135,8 @@ const GoogleReviewsWidget: React.FC = () => {
                         <button
                             onClick={() => setShowWidget(false)}
                             className={`px-6 py-2 rounded-lg font-semibold transition-all duration-300 ${!showWidget
-                                    ? 'bg-gradient-to-r from-blue-600 to-green-600 text-white shadow-md'
-                                    : 'text-gray-600 hover:text-blue-600'
+                                ? 'bg-gradient-to-r from-blue-600 to-green-600 text-white shadow-md'
+                                : 'text-gray-600 hover:text-blue-600'
                                 }`}
                         >
                             Destacadas
@@ -144,8 +144,8 @@ const GoogleReviewsWidget: React.FC = () => {
                         <button
                             onClick={() => setShowWidget(true)}
                             className={`px-6 py-2 rounded-lg font-semibold transition-all duration-300 ${showWidget
-                                    ? 'bg-gradient-to-r from-blue-600 to-green-600 text-white shadow-md'
-                                    : 'text-gray-600 hover:text-blue-600'
+                                ? 'bg-gradient-to-r from-blue-600 to-green-600 text-white shadow-md'
+                                : 'text-gray-600 hover:text-blue-600'
                                 }`}
                         >
                             Todas las reseñas

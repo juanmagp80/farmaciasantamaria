@@ -5,17 +5,17 @@ import { ReactNode, useEffect } from 'react';
 import Modal from 'react-modal';
 
 interface ClientWrapperProps {
-  children: ReactNode;
+    children: ReactNode;
 }
 
 export default function ClientWrapper({ children }: ClientWrapperProps) {
-  useEffect(() => {
-    Modal.setAppElement('body');
-  }, []);
+    useEffect(() => {
+        Modal.setAppElement('body');
+    }, []);
 
-  return (
-    <SessionProvider>
-      {children}
-    </SessionProvider>
-  );
+    return (
+        <SessionProvider>
+            {children}
+        </SessionProvider>
+    );
 }

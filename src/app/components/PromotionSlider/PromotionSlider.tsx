@@ -104,7 +104,7 @@ const PromotionSlider: React.FC = () => {
             }}>
                 🎯 Ofertas Especiales
             </h1>
-            
+
             <div style={{
                 position: 'relative',
                 borderRadius: '0.5rem',
