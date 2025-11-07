@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
-import { FaHome, FaUsers, FaPhone, FaShoppingCart, FaCog, FaHeartbeat } from 'react-icons/fa';
-import { FaPrescriptionBottleAlt } from 'react-icons/fa';
+import { FaCog, FaHeartbeat, FaHome, FaPhone, FaPrescriptionBottleAlt, FaShoppingCart, FaUsers } from 'react-icons/fa';
 
 interface MainHeaderProps {
     className?: string;
@@ -85,11 +84,11 @@ const MainHeader = ({ className = "" }: MainHeaderProps) => {
             {/* Menú móvil */}
             {isOpen && (
                 <>
-                    <div 
+                    <div
                         className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
                         onClick={() => setIsOpen(false)}
                     />
-                    
+
                     <div className="lg:hidden fixed top-0 right-0 h-full w-80 bg-white/95 backdrop-blur-xl shadow-2xl z-50 overflow-y-auto">
                         <div className="p-6 pt-24">
                             <div className="mb-8 p-4 bg-gradient-to-r from-blue-50 to-green-50 rounded-2xl">
