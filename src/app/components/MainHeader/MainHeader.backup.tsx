@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { FaHome, FaUsers, FaPhone, FaShoppingCart, FaCog, FaHeartbeat } from 'react-icons/fa';
-import { BiPharmacy } from 'react-icons/bi';
+import { FaPrescriptionBottleAlt } from 'react-icons/fa';
 
 interface MainHeaderProps {
     className?: string;
@@ -50,7 +50,7 @@ const MainHeader = ({ className = "" }: MainHeaderProps) => {
                     {/* Logo */}
                     <div className="flex items-center space-x-3 flex-shrink-0">
                         <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
-                            <BiPharmacy className="text-white text-2xl" />
+                            <FaPrescriptionBottleAlt className="text-white text-2xl" />
                         </div>
                         <div className="hidden sm:block">
                             <h1 className="text-xl font-bold text-gray-800">Farmacia</h1>
@@ -95,7 +95,7 @@ const MainHeader = ({ className = "" }: MainHeaderProps) => {
                             <div className="mb-8 p-4 bg-gradient-to-r from-blue-50 to-green-50 rounded-2xl">
                                 <div className="flex items-center space-x-3 mb-3">
                                     <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
-                                        <BiPharmacy className="text-white text-lg" />
+                                        <FaPrescriptionBottleAlt className="text-white text-lg" />
                                     </div>
                                     <div>
                                         <h3 className="font-bold text-gray-800">Farmacia Santa María</h3>
