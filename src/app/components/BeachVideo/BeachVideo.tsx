@@ -1,6 +1,7 @@
 "use client"
 import { useEffect, useState } from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
+import Image from 'next/image';
 
 const BeachVideo = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -63,10 +64,12 @@ const BeachVideo = () => {
         <div className="text-center text-white max-w-4xl">
           <div className="mb-8">
             <div className="inline-flex items-center justify-center w-32 h-32 bg-white rounded-full mb-6 shadow-2xl border-4 border-white/30">
-              <img
+              <Image
                 src="/santamaria2.png"
                 alt="Farmacia Santa María"
-                className="w-24 h-24 object-contain"
+                width={96}
+                height={96}
+                className="object-contain"
               />
             </div>
           </div>

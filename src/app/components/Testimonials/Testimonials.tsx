@@ -126,7 +126,7 @@ const Testimonials: React.FC = () => {
               <div className="flex-1">
                 <FaQuoteLeft className="text-3xl text-green-600 mb-4" />
                 <p className="text-gray-700 text-lg leading-relaxed mb-6 italic">
-                  "{testimonials[currentIndex].text}"
+                  &ldquo;{testimonials[currentIndex].text}&rdquo;
                 </p>
                 <div className="bg-green-50 rounded-lg p-3 inline-block">
                   <span className="text-green-700 font-semibold text-sm">

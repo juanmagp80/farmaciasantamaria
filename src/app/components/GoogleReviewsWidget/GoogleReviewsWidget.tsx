@@ -207,7 +207,7 @@ const GoogleReviewsWidget: React.FC = () => {
                                     <div className="relative">
                                         <FaQuoteLeft className="absolute -top-1 -left-1 w-4 h-4 text-blue-300" />
                                         <p className="text-gray-700 leading-relaxed pl-6 italic">
-                                            "{review.text}"
+                                            &ldquo;{review.text}&rdquo;
                                         </p>
                                     </div>
                                     
