@@ -65,7 +65,7 @@ const Card: React.FC<{ miembro: Miembro; index: number }> = ({ miembro, index })
     const [isFlipped, setIsFlipped] = useState(false);
 
     return (
-        <div 
+        <div
             className="group relative w-full max-w-sm mx-auto bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden cursor-pointer"
             onClick={() => setIsFlipped(!isFlipped)}
             style={{
@@ -77,7 +77,7 @@ const Card: React.FC<{ miembro: Miembro; index: number }> = ({ miembro, index })
         >
             {/* Gradiente decorativo superior */}
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-green-500 to-blue-600"></div>
-            
+
             {/* Contenido principal */}
             <div className={`relative transition-transform duration-700 preserve-3d ${isFlipped ? 'rotate-y-180' : ''}`}>
                 {/* Cara frontal */}
@@ -91,20 +91,20 @@ const Card: React.FC<{ miembro: Miembro; index: number }> = ({ miembro, index })
                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                            
+
                             {/* Badge de cargo - movido a la parte inferior */}
                             <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full">
                                 <span className="text-xs font-semibold text-blue-700">
                                     {miembro.cargo.includes('Farmacéutica') ? '👩‍⚕️' : '👨‍💼'} {miembro.cargo}
                                 </span>
                             </div>
-                            
+
                             {/* Indicador de flip */}
                             <div className="absolute bottom-4 right-4 bg-blue-600/80 backdrop-blur-sm text-white p-2 rounded-full">
                                 <span className="text-sm">ℹ️</span>
                             </div>
                         </div>
-                        
+
                         {/* Información básica */}
                         <div className="p-6">
                             <h3 className="font-bold text-lg text-gray-800 mb-2 group-hover:text-blue-700 transition-colors">
@@ -113,12 +113,12 @@ const Card: React.FC<{ miembro: Miembro; index: number }> = ({ miembro, index })
                             <p className="text-gray-600 text-sm leading-relaxed mb-4">
                                 {miembro.descripcion.substring(0, 80)}...
                             </p>
-                            
+
                             {/* Especialidades */}
                             {miembro.especialidades && (
                                 <div className="flex flex-wrap gap-1">
                                     {miembro.especialidades.slice(0, 2).map((esp, idx) => (
-                                        <span 
+                                        <span
                                             key={idx}
                                             className="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full"
                                         >
@@ -135,7 +135,7 @@ const Card: React.FC<{ miembro: Miembro; index: number }> = ({ miembro, index })
                         </div>
                     </div>
                 </div>
-                
+
                 {/* Cara trasera */}
                 <div className="absolute inset-0 backface-hidden rotate-y-180 bg-gradient-to-br from-blue-50 to-green-50">
                     <div className="p-6 h-full flex flex-col justify-center">
@@ -148,19 +148,19 @@ const Card: React.FC<{ miembro: Miembro; index: number }> = ({ miembro, index })
                             <h4 className="font-bold text-lg text-gray-800 mb-1">{miembro.nombre}</h4>
                             <p className="text-blue-600 font-semibold text-sm">{miembro.cargo}</p>
                         </div>
-                        
+
                         <div className="space-y-4">
                             <p className="text-gray-700 text-sm leading-relaxed text-center">
                                 {miembro.descripcion}
                             </p>
-                            
+
                             {/* Todas las especialidades */}
                             {miembro.especialidades && (
                                 <div>
                                     <h5 className="font-semibold text-gray-800 mb-2 text-center">Especialidades:</h5>
                                     <div className="flex flex-wrap gap-2 justify-center">
                                         {miembro.especialidades.map((esp, idx) => (
-                                            <span 
+                                            <span
                                                 key={idx}
                                                 className="px-3 py-1 bg-white/80 text-blue-700 text-xs rounded-full border border-blue-200"
                                             >
@@ -171,10 +171,10 @@ const Card: React.FC<{ miembro: Miembro; index: number }> = ({ miembro, index })
                                 </div>
                             )}
                         </div>
-                        
+
                         {/* Botón para volver */}
                         <div className="mt-6 text-center">
-                            <button 
+                            <button
                                 className="text-blue-600 text-sm font-semibold hover:text-blue-800 transition-colors"
                                 onClick={(e) => {
                                     e.stopPropagation();
@@ -206,21 +206,21 @@ const OurTeam: React.FC = () => {
                         Nuestro <span className="bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">Equipo</span>
                     </h2>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                        Profesionales cualificados comprometidos con tu salud y bienestar. 
+                        Profesionales cualificados comprometidos con tu salud y bienestar.
                         Cada miembro de nuestro equipo aporta experiencia y dedicación personal.
                     </p>
                     <div className="mt-6 flex justify-center">
                         <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-green-500 rounded-full"></div>
                     </div>
                 </div>
-                
+
                 {/* Grid de tarjetas */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                     {miembros.map((miembro, index) => (
                         <Card key={index} miembro={miembro} index={index} />
                     ))}
                 </div>
-                
+
                 {/* Call to action */}
                 <div className="mt-16 text-center">
                     <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg max-w-2xl mx-auto">
@@ -228,7 +228,7 @@ const OurTeam: React.FC = () => {
                             ¿Necesitas consulta personalizada?
                         </h3>
                         <p className="text-gray-600 mb-6">
-                            Nuestro equipo está aquí para ayudarte con cualquier consulta sobre medicamentos, 
+                            Nuestro equipo está aquí para ayudarte con cualquier consulta sobre medicamentos,
                             productos de salud y bienestar.
                         </p>
                         <button className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
@@ -237,7 +237,7 @@ const OurTeam: React.FC = () => {
                     </div>
                 </div>
             </div>
-            
+
             <style jsx global>{`
                 @keyframes fadeInUp {
                     from {

@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import { FaFacebook, FaInstagram, FaMapMarkerAlt, FaPhone, FaWhatsapp, FaEnvelope, FaClock, FaHeart, FaCertificate, FaShieldAlt, FaUserMd } from 'react-icons/fa';
+import { FaCertificate, FaClock, FaEnvelope, FaFacebook, FaHeart, FaInstagram, FaMapMarkerAlt, FaPhone, FaShieldAlt, FaUserMd, FaWhatsapp } from 'react-icons/fa';
 
 const Footer: React.FC = () => {
     const currentYear = new Date().getFullYear();
@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
             {/* Sección principal del footer */}
             <div className="container mx-auto px-6 py-16">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    
+
                     {/* Información de la farmacia */}
                     <div className="space-y-6">
                         <div className="flex items-center space-x-3">
@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
                             </div>
                         </div>
                         <p className="text-gray-300 leading-relaxed">
-                            Tu farmacia de confianza en La Cala del Moral. 
+                            Tu farmacia de confianza en La Cala del Moral.
                             Comprometidos con tu salud y bienestar desde hace más de una década.
                         </p>
                         <div className="flex items-center space-x-2 text-green-300">
@@ -39,7 +39,7 @@ const Footer: React.FC = () => {
                             Contacto
                         </h4>
                         <div className="space-y-4">
-                            <a 
+                            <a
                                 href="tel:951921399"
                                 className="flex items-center space-x-3 text-gray-300 hover:text-white transition-colors group"
                             >
@@ -48,8 +48,8 @@ const Footer: React.FC = () => {
                                 </div>
                                 <span>951 921 399</span>
                             </a>
-                            
-                            <a 
+
+                            <a
                                 href="https://wa.me/630950016"
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -60,8 +60,8 @@ const Footer: React.FC = () => {
                                 </div>
                                 <span>630 950 016</span>
                             </a>
-                            
-                            <a 
+
+                            <a
                                 href="mailto:info@farmaciasantamaria.com"
                                 className="flex items-center space-x-3 text-gray-300 hover:text-white transition-colors group"
                             >
@@ -93,8 +93,8 @@ const Footer: React.FC = () => {
                                 <span className="text-red-300 font-semibold">Cerrado</span>
                             </div>
                         </div>
-                        
-                        <a 
+
+                        <a
                             href="https://www.google.com/maps?q=Avda+M%C3%A1laga+36,+La+cala+del+Moral,+M%C3%A1laga"
                             target="_blank"
                             rel="noopener noreferrer"
@@ -138,7 +138,7 @@ const Footer: React.FC = () => {
                                 <span className="text-sm">Dermofarmacia</span>
                             </div>
                         </div>
-                        
+
                         <div className="flex items-center space-x-2 text-green-300 mt-6">
                             <FaShieldAlt className="w-4 h-4" />
                             <span className="text-sm">Calidad garantizada</span>
@@ -151,7 +151,7 @@ const Footer: React.FC = () => {
             <div className="border-t border-gray-700">
                 <div className="container mx-auto px-6 py-8">
                     <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
-                        
+
                         {/* Enlaces rápidos */}
                         <div className="flex flex-wrap justify-center md:justify-start gap-6 text-sm">
                             <a href="/" className="text-gray-300 hover:text-white transition-colors">Inicio</a>
