@@ -1,14 +1,21 @@
 // src/app/layout.tsx
-"use client"
-import { SessionProvider } from 'next-auth/react';
+import { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
-import { ReactNode, useEffect } from 'react';
-import Modal from 'react-modal';
-import '../../src/app/globals.css';
+import { ReactNode } from 'react';
+import './globals.css';
 import ContactHeader from './components/ContactHeader/ContactHeader';
 import Footer from './components/Footer/Footer';
 import GoogleReviewsWidget from './components/GoogleReviewsWidget/GoogleReviewsWidget';
 import MainHeader from './components/MainHeader/MainHeader';
+import ClientWrapper from './components/ClientWrapper';
+
+export const metadata: Metadata = {
+  title: 'Farmacia Santa María',
+  description: 'Farmacia Santa María - Tu farmacia de confianza',
+  icons: {
+    icon: '/favicon.ico',
+  },
+};
 
 const poppins = Poppins({ 
   weight: ['300', '400', '500', '600', '700'],
@@ -21,35 +28,42 @@ interface LayoutProps {
 }
 
 export default function RootLayout({ children }: LayoutProps) {
-
-  useEffect(() => {
-    Modal.setAppElement('body');
-  }, []);
-
   return (
-    <SessionProvider>
-      <html lang="es" className="scroll-smooth">
-        <head>
-          <meta charSet="utf-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <meta name="description" content="Farmacia Santa María - Tu farmacia de confianza en La Cala del Moral. Servicios profesionales, consultas online y atención personalizada." />
-          <meta name="keywords" content="farmacia, salud, medicamentos, La Cala del Moral, Málaga, consultas online, encargos" />
-          <meta name="author" content="Farmacia Santa María" />
-          <link rel="icon" href="/farmacia.png" />
-          <title>Farmacia Santa María - Tu Salud, Nuestra Prioridad</title>
-        </head>
-        <body className={`${poppins.className} antialiased bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen`}>
-          <div className="flex flex-col min-h-screen">
+    <html lang="es" className="scroll-smooth">
+      <body 
+        className={`${poppins.className} antialiased bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen`}
+        style={{
+          margin: 0,
+          padding: 0,
+          minHeight: '100vh',
+          backgroundColor: '#f8fafc',
+          fontFamily: 'system-ui, sans-serif'
+        }}
+      >
+        <ClientWrapper>
+          <div 
+            className="flex flex-col min-h-screen"
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              minHeight: '100vh'
+            }}
+          >
             <ContactHeader />
             <MainHeader className="main-header-transparent" />
-            <main className="flex-grow">
+            <main 
+              className="flex-grow"
+              style={{
+                flex: '1 1 0%'
+              }}
+            >
               {children}
             </main>
             <GoogleReviewsWidget />
             <Footer />
           </div>
-        </body>
-      </html>
-    </SessionProvider>
+        </ClientWrapper>
+      </body>
+    </html>
   );
 }

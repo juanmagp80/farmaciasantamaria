@@ -1,6 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react';
-import { FaExternalLinkAlt, FaGoogle, FaQuoteLeft, FaStar, FaThumbsUp } from 'react-icons/fa';
+import React, { useState } from 'react';
 
 interface Review {
     id: string;
@@ -63,32 +62,17 @@ const GoogleReviewsWidget: React.FC = () => {
     const averageRating = mockReviews.reduce((acc, review) => acc + review.rating, 0) / mockReviews.length;
     const totalReviews = mockReviews.length;
 
-    useEffect(() => {
-        // Cargar el widget de Elfsight si es necesario
-        const script = document.createElement('script');
-        script.src = "https://static.elfsight.com/platform/platform.js";
-        script.setAttribute('data-use-service-core', '');
-        script.defer = true;
-        document.body.appendChild(script);
-
-        return () => {
-            if (document.body.contains(script)) {
-                document.body.removeChild(script);
-            }
-        };
-    }, []);
-
     const renderStars = (rating: number) => {
         return Array.from({ length: 5 }, (_, index) => (
-            <FaStar
+            <span
                 key={index}
-                className={`w-4 h-4 ${index < Math.floor(rating)
-                        ? 'text-yellow-400'
-                        : index < rating
-                            ? 'text-yellow-300'
-                            : 'text-gray-300'
-                    }`}
-            />
+                style={{
+                    color: index < Math.floor(rating) ? '#fbbf24' : index < rating ? '#fde047' : '#d1d5db',
+                    fontSize: '1rem'
+                }}
+            >
+                ★
+            </span>
         ));
     };
 
@@ -108,7 +92,7 @@ const GoogleReviewsWidget: React.FC = () => {
                 <div className="text-center mb-16">
                     <div className="flex justify-center mb-4">
                         <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
-                            <FaGoogle className="text-3xl text-white" />
+                            <span className="text-3xl text-white">⭐</span>
                         </div>
                     </div>
                     <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
@@ -202,7 +186,7 @@ const GoogleReviewsWidget: React.FC = () => {
                                     </div>
 
                                     <div className="relative">
-                                        <FaQuoteLeft className="absolute -top-1 -left-1 w-4 h-4 text-blue-300" />
+                                        <span className="absolute -top-1 -left-1 text-blue-300 text-lg">&ldquo;</span>
                                         <p className="text-gray-700 leading-relaxed pl-6 italic">
                                             &ldquo;{review.text}&rdquo;
                                         </p>
@@ -210,10 +194,10 @@ const GoogleReviewsWidget: React.FC = () => {
 
                                     <div className="mt-4 flex items-center justify-between">
                                         <div className="flex items-center space-x-2 text-green-600">
-                                            <FaThumbsUp className="w-3 h-3" />
+                                            <span className="text-xs">👍</span>
                                             <span className="text-xs">Reseña verificada</span>
                                         </div>
-                                        <FaGoogle className="w-4 h-4 text-blue-500" />
+                                        <span className="text-blue-500">🔍</span>
                                     </div>
                                 </div>
                             ))}
@@ -235,9 +219,9 @@ const GoogleReviewsWidget: React.FC = () => {
                                     rel="noopener noreferrer"
                                     className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-green-600 text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
                                 >
-                                    <FaGoogle className="w-5 h-5" />
+                                    <span>🔍</span>
                                     <span>Escribir reseña en Google</span>
-                                    <FaExternalLinkAlt className="w-4 h-4" />
+                                    <span>↗️</span>
                                 </a>
                             </div>
                         </div>

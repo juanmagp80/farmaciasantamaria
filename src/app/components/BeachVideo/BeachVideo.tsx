@@ -1,38 +1,12 @@
 "use client"
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
 
 const BeachVideo = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Simular un breve tiempo de carga para la imagen de fondo
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
+  // Eliminamos toda la lógica de loading
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      {/* Loading State */}
-      {isLoading && (
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-green-600 to-blue-800 flex items-center justify-center z-20">
-          <div className="text-center text-white">
-            <div className="relative">
-              <div className="animate-spin rounded-full h-16 w-16 border-4 border-white border-t-transparent mx-auto mb-4"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-2xl">🏖️</span>
-              </div>
-            </div>
-            <p className="text-xl font-semibold">Cargando experiencia...</p>
-            <p className="text-sm text-blue-200 mt-2">Preparando el ambiente perfecto</p>
-          </div>
-        </div>
-      )}
-
       {/* Background Image */}
       <div className="absolute inset-0">
         <div className="w-full h-full relative">
